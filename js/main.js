@@ -74,6 +74,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
 
+    // FAQ Accordion Logic
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            
+            // Close other FAQ items (Optional - remove if you want multiple open)
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) item.classList.remove('active');
+            });
+
+            // Toggle current item
+            faqItem.classList.toggle('active');
+        });
+    });
+
     // Copy to Clipboard Feature
     const copyBoxes = document.querySelectorAll('.copy-box');
 
