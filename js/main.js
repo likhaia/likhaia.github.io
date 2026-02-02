@@ -106,31 +106,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = document.querySelector('.close-modal');
     const viewButtons = document.querySelectorAll('.view-samples-btn');
 
-    // Data for Sample Images (Update these URLs with your actual images later)
+    // Data for Sample Images (Real Unsplash Images)
     const sampleData = {
         stickers: [
-            'https://placehold.co/400x400/4B0082/FFFFFF?text=Sticker+Sheet+1',
-            'https://placehold.co/400x400/5d1092/FFFFFF?text=Die-Cut+Stickers',
-            'https://placehold.co/400x400/6f20a2/FFFFFF?text=Holo+Stickers',
-            'https://placehold.co/400x400/8130b2/FFFFFF?text=Logo+Stickers'
+            'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1572375992501-4b0892d50c69?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1572375992501-4b0892d50c69?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1620300762319-53e74d92ebc9?auto=format&fit=crop&w=600&q=80'
         ],
         polaroids: [
-            'https://placehold.co/400x400/4B0082/FFFFFF?text=Polaroid+Plain',
-            'https://placehold.co/400x400/5d1092/FFFFFF?text=Holo+Photocards',
-            'https://placehold.co/400x400/6f20a2/FFFFFF?text=Toploaders',
-            'https://placehold.co/400x400/8130b2/FFFFFF?text=Group+Set'
+            'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1604163546580-c5332616f97c?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1593453896434-d2e825a0a38b?auto=format&fit=crop&w=600&q=80'
         ],
         craftbooks: [
-            'https://placehold.co/400x400/4B0082/FFFFFF?text=A5+Journal',
-            'https://placehold.co/400x400/5d1092/FFFFFF?text=Sketchbook',
-            'https://placehold.co/400x400/6f20a2/FFFFFF?text=Handbound+Detail',
-            'https://placehold.co/400x400/8130b2/FFFFFF?text=Vintage+Style'
+            'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1456615074700-1dc12aa7364d?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&q=80'
         ],
         gifts: [
-            'https://placehold.co/400x400/4B0082/FFFFFF?text=Birthday+Box',
-            'https://placehold.co/400x400/5d1092/FFFFFF?text=Anniversary+Set',
-            'https://placehold.co/400x400/6f20a2/FFFFFF?text=Mug+%26+Coaster',
-            'https://placehold.co/400x400/8130b2/FFFFFF?text=Christening+Token'
+            'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1607344645830-47b6ad6c770d?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1632662095332-9076ce6e1215?auto=format&fit=crop&w=600&q=80'
         ]
     };
 
