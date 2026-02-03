@@ -1857,6 +1857,22 @@ body.loaded #preloader {
     width: 95%;
 }
 
+@media (max-width: 768px) and (orientation: portrait) {
+    .flipbook-content {
+        transform: rotate(90deg);
+        width: 90vh; /* Use height as width since we rotated */
+        max-width: none;
+    }
+    
+    .flipbook-container {
+        padding-top: 65%; /* Adjusted for rotation */
+    }
+
+    #flipbook-modal h3 {
+        display: none; /* Hide title to save space in rotated view */
+    }
+}
+
 .flipbook-container {
     position: relative;
     width: 100%;
