@@ -312,14 +312,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Studio Feed Navigation Logic
+    const feed = document.getElementById('feed-container');
+    const prevBtn = document.getElementById('feed-prev');
+    const nextBtn = document.getElementById('feed-next');
+
+    if (feed && prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+            feed.scrollBy({ left: -320, behavior: 'smooth' });
+        });
+        nextBtn.addEventListener('click', () => {
+            feed.scrollBy({ left: 320, behavior: 'smooth' });
+        });
+
+        // Drag to Scroll Logic for Mouse
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        feed.addEventListener('mousedown', (e) => {
+            isDown = true;
+            feed.style.cursor = 'grabbing';
+            startX = e.pageX - feed.offsetLeft;
+            scrollLeft = feed.scrollLeft;
+        });
+        feed.addEventListener('mouseleave', () => {
+            isDown = false;
+            feed.style.cursor = 'grab';
+        });
+        feed.addEventListener('mouseup', () => {
+            isDown = false;
+            feed.style.cursor = 'grab';
+        });
+        feed.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - feed.offsetLeft;
+            const walk = (x - startX) * 2; // Scroll speed
+            feed.scrollLeft = scrollLeft - walk;
+        });
+    }
+
     // Lightbox Logic
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     document.querySelectorAll('.gallery-item').forEach(item => {
         item.addEventListener('click', () => {
-            lightboxImg.src = item.querySelector('img').src;
-            lightbox.classList.add('show');
-            document.body.style.overflow = 'hidden';
+            const img = item.querySelector('img');
+            if (img) {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
         });
     });
 });

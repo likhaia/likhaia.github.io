@@ -365,37 +365,60 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
+    <!-- Gallery Section (Enhanced Feed) -->
     <section id="gallery" class="section bg-light">
         <div class="container">
             <div class="section-header animate-on-scroll fade-up">
-                <h2>Recent Works</h2>
-                <p>A glimpse into our creative portfolio.</p>
+                <span class="sub-title">Studio Feed</span>
+                <h2>Recent Customer Works</h2>
+                <p>A peek into the beautiful stories we've helped preserve. Swipe to see more!</p>
             </div>
-            <div class="gallery-grid">
-                <div class="gallery-item animate-on-scroll fade-up">
-                    <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=400&q=80" alt="Sticker Haul">
-                    <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+            
+            <div class="feed-wrapper animate-on-scroll fade-up">
+                <button class="feed-nav prev" id="feed-prev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="feed-container" id="feed-container">
+                    <!-- Order 1 -->
+                    <div class="feed-item gallery-item">
+                        <div class="order-badge">Customer Order</div>
+                        <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=400&q=80" alt="Recent Work">
+                        <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <!-- Order 2 -->
+                    <div class="feed-item gallery-item">
+                        <div class="order-badge">Customer Order</div>
+                        <img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=400&q=80" alt="Recent Work">
+                        <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <!-- Order 3 -->
+                    <div class="feed-item gallery-item">
+                        <div class="order-badge">Customer Order</div>
+                        <img src="https://images.unsplash.com/photo-1604163546180-039a1781c0d2?auto=format&fit=crop&w=400&q=80" alt="Recent Work">
+                        <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <!-- Order 4 -->
+                    <div class="feed-item gallery-item">
+                        <div class="order-badge">Customer Order</div>
+                        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80" alt="Recent Work">
+                        <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <!-- Order 5 -->
+                    <div class="feed-item gallery-item">
+                        <div class="order-badge">Customer Order</div>
+                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=400&q=80" alt="Recent Work">
+                        <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <!-- Order 6 -->
+                    <div class="feed-item gallery-item">
+                        <div class="order-badge">Customer Order</div>
+                        <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=400&q=80" alt="Recent Work">
+                        <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
                 </div>
-                <div class="gallery-item animate-on-scroll fade-up" style="transition-delay: 0.1s;">
-                    <img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=400&q=80" alt="Gift Box">
-                    <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                </div>
-                <div class="gallery-item animate-on-scroll fade-up" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1604163546180-039a1781c0d2?auto=format&fit=crop&w=400&q=80" alt="Polaroid Set">
-                    <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                </div>
-                <div class="gallery-item animate-on-scroll fade-up" style="transition-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=400&q=80" alt="Journal">
-                    <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                </div>
-                <div class="gallery-item animate-on-scroll fade-up" style="transition-delay: 0.4s;">
-                    <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=400&q=80" alt="Event Decor">
-                    <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                </div>
-                <div class="gallery-item animate-on-scroll fade-up" style="transition-delay: 0.5s;">
-                    <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=400&q=80" alt="Custom Mug">
-                    <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                <button class="feed-nav next" id="feed-next" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+                
+                <!-- Scroll Instructions for Mobile -->
+                <div class="feed-nav-hint">
+                    <i class="fa-solid fa-arrows-left-right"></i> Scroll to explore
                 </div>
             </div>
         </div>
