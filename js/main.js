@@ -202,6 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
         lam_keychain: [
             { url: 'https://images.unsplash.com/photo-1621600411688-4be93cd68504?auto=format&fit=crop&w=600&q=80', id: 'LW-LK-01' }
+        ],
+        vinyl_decals: [
+            { url: 'https://images.unsplash.com/photo-1626114271030-4419757048d0?auto=format&fit=crop&w=600&q=80', id: 'LW-VD-01' }
         ]
     };
 
@@ -251,7 +254,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Spotify/Photo Keychain': 'B1T1 at ₱59 (+₱5 for full-page). Include song details/photo.',
         'Polaroid/Instax Prints': '10 pcs for ₱49 (+₱10 for colored frame). Include border choice.',
         'Blind Box': 'Includes 10 polaroids, 1 message with picture, and 1 keychain. Mention theme!',
-        'Custom Gift Set': 'Box with mini flowers, etc. Send your inspo and choice of items!'
+        'Custom Gift Set': 'Box with mini flowers, etc. Send your inspo and choice of items!',
+        'Vinyl Decals (Moto/Car)': 'Include: Design/Text and Vinyl Color (Matte/Glossy/Holo). Max A4 size.'
     };
 
     const openOrderModal = (product, code = '') => {
