@@ -508,6 +508,38 @@ img { max-width: 100%; display: block; border-radius: var(--border-radius); }
     height: 280px;
 }
 
+.preview-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 15;
+    background: rgba(49, 10, 93, 0.9);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    backdrop-filter: blur(5px);
+}
+
+.preview-badge:hover {
+    background: var(--accent-pink);
+    transform: scale(1.05);
+}
+
+.preview-badge i {
+    font-size: 0.9rem;
+}
+
 .card-image img {
     width: 100%;
     height: 100%;
