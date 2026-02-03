@@ -246,14 +246,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderCode = document.getElementById('order-code');
 
     const productGuides = {
-        'Mini Scrapbook (A6)': 'Include: Preferred Theme (Valentine/Birthday/etc), 35 Photos, 2 Messages, Song Title & Artist.',
-        'Photostrip Keychain': 'Include: Design choice and Frame color (+₱5). B1T1!',
-        'Spotify/Photo Keychain': 'Include: Design type (Spotify/Chibi/Photo) and Song details. B1T1!',
-        'Polaroid/Instax Prints': 'Include: Border choice (White/Color +₱10). 10pcs set.',
-        'Blind Box': 'Include: Preferred Theme/Occasion for the items inside.',
-        'Custom Gift Set': 'Include: Box type, Mini flower colors, and your inspiration/inspo!',
-        'Customized Chibi Stickers': 'Include: Photo of the person/character to be "chibi-fied" and quantity.',
-        'Laminated Photo Keychain': 'Include: Photo(s) and if you want it single or back-to-back.'
+        'Mini Scrapbook (A6)': 'Include: Theme, 35 Photos, 2 Messages, 1 Fav Song & Description. 6 pages total.',
+        'Photostrip Keychain': 'B1T1 at ₱49 (+₱5 for colored frame). Include design choice.',
+        'Spotify/Photo Keychain': 'B1T1 at ₱59 (+₱5 for full-page). Include song details/photo.',
+        'Polaroid/Instax Prints': '10 pcs for ₱49 (+₱10 for colored frame). Include border choice.',
+        'Blind Box': 'Includes 10 polaroids, 1 message with picture, and 1 keychain. Mention theme!',
+        'Custom Gift Set': 'Box with mini flowers, etc. Send your inspo and choice of items!'
     };
 
     const openOrderModal = (product, code = '') => {
