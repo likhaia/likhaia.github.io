@@ -1,0 +1,7 @@
+# Windows temp files
+~*
+# Excel temp files
+~$*
+# OS files
+Thumbs.db
+Desktop.ini
