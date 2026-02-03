@@ -3,8 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIKHAIAWORKS | Custom Printing & Handmade Crafts</title>
-    <meta name="description" content="Custom printing and handmade crafts by LIKHAIAWORKS. Stickers, polaroids, craftbooks, and personalized gifts for every occasion.">
+    <title>LIKHAIAWORKS | Personalized Prints & Handmade Craft Studio</title>
+    <meta name="description" content="Customized stickers, mini scrapbooks, polaroids, and handmade gift sets in Valenzuela City. Preserve your memories with Likhaia Works - Handmade with love.">
+    <meta name="keywords" content="handmade crafts, custom stickers, mini scrapbook Philippines, polaroid printing, photostrip keychain, personalized gifts Valenzuela, Spotify keychain, Likhaia Works">
+    <meta name="author" content="Likhaia Works">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://likhaia.github.io/">
+    <meta property="og:title" content="LIKHAIAWORKS | Personalized Prints & Handmade Craft Studio">
+    <meta property="og:description" content="Preserve your memories with our customized stickers, scrapbooks, and gift sets. Handmade with stories, memories, and love.">
+    <meta property="og:image" content="https://likhaia.github.io/assets/images/logo.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://likhaia.github.io/">
+    <meta property="twitter:title" content="LIKHAIAWORKS | Personalized Prints & Handmade Craft Studio">
+    <meta property="twitter:description" content="Preserve your memories with our customized stickers, scrapbooks, and gift sets. Handmade with stories, memories, and love.">
+    <meta property="twitter:image" content="https://likhaia.github.io/assets/images/logo.png">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,9 +34,29 @@
     <link rel="stylesheet" href="css/style.css">
     
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='white'/><image href='https://likhaia.github.io/assets/images/logo.png' x='15' y='15' width='70' height='70'/></svg>">
 </head>
-<body>
+<body class="loading">
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Pre-loader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="assets/images/logo.png" alt="Loading..." class="loader-logo">
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" id="announcement-bar">
+        <p>✨ GRAND OPENING: Get 10% OFF on your first order! Message us to claim ✨</p>
+        <button class="close-ann" id="close-ann" aria-label="Close announcement">&times;</button>
+    </div>
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -46,7 +82,8 @@
     <!-- Hero Section -->
     <header id="hero" class="hero-section">
         <div class="container hero-content animate-on-scroll fade-up">
-            <h1 class="hero-title">Welcome to our Likha.</h1>
+            <img src="assets/images/logo.png" alt="Likhaia Works" class="hero-logo">
+            <h1 class="hero-title" id="greeting">Welcome to our Likha.</h1>
             <p class="hero-subtitle">Handmade with stories, memories, and love.<br>Follow along—this is just the beginning.</p>
             <div class="hero-buttons">
                 <a href="#products" class="btn btn-primary">Explore Collection</a>
@@ -108,114 +145,222 @@
                 <h2>Our Collections</h2>
                 <p>From digital printing to handcrafted treasures.</p>
             </div>
-            <div class="grid-3">
-                <!-- Product Card 1: Stickers & Labels -->
-                <article class="card animate-on-scroll fade-up" style="transition-delay: 0.1s;">
+
+            <!-- Category Filters -->
+            <div class="filter-container animate-on-scroll fade-up">
+                <button class="filter-btn active" data-filter="all">All Items</button>
+                <button class="filter-btn" data-filter="prints">Prints</button>
+                <button class="filter-btn" data-filter="keychains">Keychains</button>
+                <button class="filter-btn" data-filter="stickers">Stickers</button>
+                <button class="filter-btn" data-filter="gifts">Gift Sets</button>
+            </div>
+
+            <div class="grid-3 product-grid">
+                <!-- Product 1: Mini Scrapbook -->
+                <article class="card animate-on-scroll fade-up" data-category="prints">
                     <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80" alt="Custom Stickers">
-                        <div class="card-overlay">
-                            <i class="fa-solid fa-note-sticky"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" alt="Mini Scrapbook">
+                        <div class="card-overlay"><i class="fa-solid fa-book-heart"></i></div>
                     </div>
                     <div class="card-content">
-                        <h3>Custom Stickers</h3>
-                        <p>Durable, waterproof stickers and labels for branding or personal use.</p>
-                        <p class="price">Starting at ₱50.00 / sheet</p>
-                        
-                        <div class="order-instruction">
-                            <p class="instruction-label">How to Order:</p>
-                            <div class="copy-box">
-                                <span class="copy-text">Hi! I'd like to order Custom Stickers. Qty: [Number], Size: [Size], Type: [Matte/Glossy].</span>
-                            </div>
-                        </div>
-
+                        <h3>Mini Scrapbook (A6)</h3>
+                        <p>6 pages fully customizable. Includes 35 photos, 2 messages, and your favorite song.</p>
+                        <p class="price">Starting at ₱89.00</p>
                         <div class="card-actions">
-                            <button class="btn-text view-samples-btn" data-category="stickers"><i class="fa-regular fa-eye"></i> View Samples</button>
-                            <a href="#contact" class="card-link">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                            <button class="btn-text view-samples-btn" data-category="scrapbook"><i class="fa-regular fa-eye"></i> View Samples</button>
+                            <button class="btn-primary-sm order-btn" data-product="Mini Scrapbook (A6)">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
                         </div>
                     </div>
                 </article>
 
-                <!-- Product Card 2: Polaroids & Photocards -->
-                <article class="card animate-on-scroll fade-up" style="transition-delay: 0.2s;">
+                <!-- Product 2: Photostrip Keychain -->
+                <article class="card animate-on-scroll fade-up" data-category="keychains">
                     <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80" alt="Polaroids and Photocards">
-                        <div class="card-overlay">
-                            <i class="fa-solid fa-images"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?auto=format&fit=crop&w=600&q=80" alt="Photostrip Keychain">
+                        <div class="card-overlay"><i class="fa-solid fa-key"></i></div>
                     </div>
                     <div class="card-content">
-                        <h3>Polaroids & Photocards</h3>
-                        <p>High-quality prints of your favorite memories or idols. Perfect for collecting.</p>
-                        <p class="price">Starting at ₱10.00 / pc</p>
-                        
-                        <div class="order-instruction">
-                            <p class="instruction-label">How to Order:</p>
-                            <div class="copy-box">
-                                <span class="copy-text">Hi! I'd like to order Polaroids/Photocards. Qty: [Number], Finish: [Plain/Holo].</span>
-                            </div>
+                        <h3>Photostrip Keychain</h3>
+                        <p>Mini long photostrip, back-to-back regular design. B1T1 Promo!</p>
+                        <p class="price">B1T1 at ₱49.00</p>
+                        <div class="card-actions">
+                            <button class="btn-text view-samples-btn" data-category="strip_keychain"><i class="fa-regular fa-eye"></i> View Samples</button>
+                            <button class="btn-primary-sm order-btn" data-product="Photostrip Keychain">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
                         </div>
+                    </div>
+                </article>
 
+                <!-- Product 3: Spotify Keychain -->
+                <article class="card animate-on-scroll fade-up" data-category="keychains">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80" alt="Spotify Keychain">
+                        <div class="card-overlay"><i class="fa-solid fa-music"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Custom Photo Keychain</h3>
+                        <p>Spotify code, Chibi, or Full-page photo. Back-to-back B1T1 Promo!</p>
+                        <p class="price">B1T1 at ₱59.00</p>
+                        <div class="card-actions">
+                            <button class="btn-text view-samples-btn" data-category="photo_keychain"><i class="fa-regular fa-eye"></i> View Samples</button>
+                            <button class="btn-primary-sm order-btn" data-product="Spotify/Photo Keychain">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Product 4: Polaroid Prints -->
+                <article class="card animate-on-scroll fade-up" data-category="prints">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80" alt="Polaroid Prints">
+                        <div class="card-overlay"><i class="fa-solid fa-images"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Polaroid / Instax Prints</h3>
+                        <p>10 pcs high-quality regular white border prints. Perfect for your wall!</p>
+                        <p class="price">10 pcs for ₱49.00</p>
                         <div class="card-actions">
                             <button class="btn-text view-samples-btn" data-category="polaroids"><i class="fa-regular fa-eye"></i> View Samples</button>
-                            <a href="#contact" class="card-link">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                            <button class="btn-primary-sm order-btn" data-product="Polaroid/Instax Prints">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
                         </div>
                     </div>
                 </article>
 
-                <!-- Product Card 3: Craftbooks -->
-                <article class="card animate-on-scroll fade-up" style="transition-delay: 0.3s;">
+                <!-- Product 5: Blind Box -->
+                <article class="card animate-on-scroll fade-up" data-category="gifts">
                     <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80" alt="Craftbooks">
-                        <div class="card-overlay">
-                            <i class="fa-solid fa-book-open"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80" alt="Blind Box">
+                        <div class="card-overlay"><i class="fa-solid fa-box-open"></i></div>
                     </div>
                     <div class="card-content">
-                        <h3>Handmade Craftbooks</h3>
-                        <p>Beautifully bound journals and craftbooks for your sketches and notes.</p>
-                        <p class="price">Starting at ₱150.00</p>
-                        
-                        <div class="order-instruction">
-                            <p class="instruction-label">How to Order:</p>
-                            <div class="copy-box">
-                                <span class="copy-text">Hi! I'd like to order a Craftbook. Design: [Name/Desc], Size: [A5/A6].</span>
-                            </div>
-                        </div>
-
+                        <h3>Likhaia Blind Box</h3>
+                        <p>Surprise set! Includes 10 polaroids, 1 message with picture, and 1 keychain.</p>
+                        <p class="price">Starting at ₱89.00</p>
                         <div class="card-actions">
-                            <button class="btn-text view-samples-btn" data-category="craftbooks"><i class="fa-regular fa-eye"></i> View Samples</button>
-                            <a href="#contact" class="card-link">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                            <button class="btn-text view-samples-btn" data-category="blind_box"><i class="fa-regular fa-eye"></i> View Samples</button>
+                            <button class="btn-primary-sm order-btn" data-product="Blind Box">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
                         </div>
                     </div>
                 </article>
 
-                 <!-- Product Card 4: Customized Gifts -->
-                 <article class="card animate-on-scroll fade-up" style="transition-delay: 0.4s;">
+                <!-- Product 6: Custom Gift Box -->
+                <article class="card animate-on-scroll fade-up" data-category="gifts">
                     <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80" alt="Customized Gifts">
-                        <div class="card-overlay">
-                            <i class="fa-solid fa-gift"></i>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80" alt="Gift Box">
+                        <div class="card-overlay"><i class="fa-solid fa-gift"></i></div>
                     </div>
                     <div class="card-content">
                         <h3>Customized Gift Sets</h3>
-                        <p>Personalized gifts for couples, birthdays, christenings, moms, and dads.</p>
-                        <p class="price">Starting at ₱299.00</p>
-                        
-                        <div class="order-instruction">
-                            <p class="instruction-label">How to Order:</p>
-                            <div class="copy-box">
-                                <span class="copy-text">Hi! I'd like a Custom Gift Set. Occasion: [Birthday/Anniv], For: [Name].</span>
-                            </div>
-                        </div>
-
+                        <p>Bespoke sets with box, mini flowers, and more. Send us your inspiration!</p>
+                        <p class="price">Custom Pricing</p>
                         <div class="card-actions">
                             <button class="btn-text view-samples-btn" data-category="gifts"><i class="fa-regular fa-eye"></i> View Samples</button>
-                            <a href="#contact" class="card-link">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                            <button class="btn-primary-sm order-btn" data-product="Custom Gift Set">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
                         </div>
                     </div>
                 </article>
+
+                <!-- New Product 7: Chibi Stickers -->
+                <article class="card animate-on-scroll fade-up" data-category="stickers">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1620300762319-53e74d92ebc9?auto=format&fit=crop&w=600&q=80" alt="Chibi Stickers">
+                        <div class="card-overlay"><i class="fa-solid fa-face-smile-wink"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Customized Chibi Stickers</h3>
+                        <p>Turn your photos into cute chibi stickers! Hand-drawn look and waterproof.</p>
+                        <p class="price">Starting at ₱75.00</p>
+                        <div class="card-actions">
+                            <button class="btn-text view-samples-btn" data-category="chibi_stickers"><i class="fa-regular fa-eye"></i> View Samples</button>
+                            <button class="btn-primary-sm order-btn" data-product="Customized Chibi Stickers">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- New Product 8: Laminated Keychain -->
+                <article class="card animate-on-scroll fade-up" data-category="keychains">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1621600411688-4be93cd68504?auto=format&fit=crop&w=600&q=80" alt="Laminated Keychain">
+                        <div class="card-overlay"><i class="fa-solid fa-key"></i></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Laminated Photo Keychain</h3>
+                        <p>Durable, spill-proof photo keychains. Thick lamination for a glass-like finish.</p>
+                        <p class="price">Starting at ₱35.00</p>
+                        <div class="card-actions">
+                            <button class="btn-text view-samples-btn" data-category="lam_keychain"><i class="fa-regular fa-eye"></i> View Samples</button>
+                            <button class="btn-primary-sm order-btn" data-product="Laminated Photo Keychain">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Coming Soon Section -->
+            <div class="coming-soon-wrapper">
+                <div class="section-divider animate-on-scroll fade-up">
+                    <span class="divider-text">Coming Soon</span>
+                </div>
+                <div class="upcoming-grid">
+                    <article class="card animate-on-scroll fade-up card-soon">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1516533075015-a3838414c3ca?auto=format&fit=crop&w=600&q=80" alt="Coming Soon">
+                            <div class="card-overlay">
+                                <i class="fa-solid fa-hourglass-start"></i>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="badge-soon">New Idea Brewing</div>
+                            <h3>Something New...</h3>
+                            <p>We're currently experimenting with new creative materials. Stay tuned for our next collection!</p>
+                            <div class="card-actions">
+                                <button class="btn-text" disabled>Developing</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quality Promise Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header animate-on-scroll fade-up">
+                <span class="sub-title">Why Choose Likhaia?</span>
+                <h2>Our Creative Promise</h2>
+                <p>We treat every order like it's a gift for our own family.</p>
+            </div>
+            <div class="promise-grid">
+                <div class="promise-item animate-on-scroll fade-up" style="transition-delay: 0.1s;">
+                    <div class="promise-icon"><i class="fa-solid fa-square-check"></i></div>
+                    <h3>Hand-Checked Quality</h3>
+                    <p>Every sticker and craftbook is inspected by hand to ensure perfection before shipping.</p>
+                </div>
+                <div class="promise-item animate-on-scroll fade-up" style="transition-delay: 0.2s;">
+                    <div class="promise-icon"><i class="fa-solid fa-box-open"></i></div>
+                    <h3>Ready-to-Gift Packaging</h3>
+                    <p>No need for extra wrapping! Every order arrives in our signature cute packaging.</p>
+                </div>
+                <div class="promise-item animate-on-scroll fade-up" style="transition-delay: 0.3s;">
+                    <div class="promise-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h3>Truly Personalized</h3>
+                    <p>We don't do mass production. Each piece is customized specifically to your story.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="section-header animate-on-scroll fade-up">
+                <span class="sub-title">Stay Connected</span>
+                <h2>Follow us on Instagram</h2>
+                <p>Get a daily dose of crafts and behind-the-scenes content. <a href="https://www.facebook.com/profile.php?id=61586971808917" target="_blank" style="color:var(--accent-pink); font-weight: 600;">@likhaiaworks</a></p>
+            </div>
+            <div class="insta-grid animate-on-scroll fade-up">
+                <div class="insta-item"><img src="https://images.unsplash.com/photo-1620300762319-53e74d92ebc9?auto=format&fit=crop&w=300&q=80" alt="Insta 1"></div>
+                <div class="insta-item"><img src="https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?auto=format&fit=crop&w=300&q=80" alt="Insta 2"></div>
+                <div class="insta-item"><img src="https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=300&q=80" alt="Insta 3"></div>
+                <div class="insta-item"><img src="https://images.unsplash.com/photo-1607344645830-47b6ad6c770d?auto=format&fit=crop&w=300&q=80" alt="Insta 4"></div>
+                <div class="insta-item"><img src="https://images.unsplash.com/photo-1621600411688-4be93cd68504?auto=format&fit=crop&w=300&q=80" alt="Insta 5"></div>
+                <div class="insta-item"><img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=300&q=80" alt="Insta 6"></div>
             </div>
         </div>
     </section>
@@ -346,6 +491,9 @@
                         <a href="mailto:likhaiaworks@gmail.com" class="contact-btn email">
                             <span class="icon"><i class="fa-regular fa-envelope"></i></span> Email Us
                         </a>
+                        <button id="share-shop" class="contact-btn share-btn">
+                            <span class="icon"><i class="fa-solid fa-share-nodes"></i></span> Share Shop
+                        </button>
                     </div>
 
                     <div class="contact-details">
@@ -388,11 +536,52 @@
                 <div class="footer-socials">
                     <a href="https://www.facebook.com/profile.php?id=61586971808917" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
                     <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.tiktok.com/@likhaia.works" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Order Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-order-modal" aria-label="Close modal">&times;</button>
+            <h3 id="order-modal-title">Customize Your Order</h3>
+            <form id="order-form" class="order-form">
+                <input type="hidden" id="product-name">
+                <div class="form-group">
+                    <label for="order-code">Reference Code (Optional)</label>
+                    <input type="text" id="order-code" placeholder="e.g. LW-ST-01">
+                </div>
+                <div class="form-group">
+                    <label for="order-qty">Quantity</label>
+                    <input type="number" id="order-qty" min="1" value="1" required>
+                </div>
+                <div class="form-group rush-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="order-rush">
+                        <span>Is this a Rush Order?</span>
+                    </label>
+                    <p class="rush-note" id="rush-note">Subject to additional fees & availability.</p>
+                </div>
+                <div class="form-group">
+                    <label for="order-date">Desired Delivery Date</label>
+                    <input type="date" id="order-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="order-details">Customization Details</label>
+                    <p class="form-guide" id="order-guide">Please include details like size, color, and design notes.</p>
+                    <textarea id="order-details" placeholder="Enter your notes here..." required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="send-messenger" class="btn-messenger"><i class="fa-brands fa-facebook-messenger"></i> Send via Messenger</button>
+                    <button type="button" id="send-email" class="btn-email"><i class="fa-regular fa-envelope"></i> Send via Email</button>
+                </div>
+                <p class="form-note">Clicking a button will pre-fill your order details in a message!</p>
+                <p class="form-note photo-note"><i class="fa-solid fa-circle-info"></i> Need to send photos? You can upload and send them directly in our Messenger chat after sending this form!</p>
+            </form>
+        </div>
+    </div>
 
     <!-- Sample Preview Modal -->
     <div id="sample-modal" class="modal">
@@ -402,6 +591,25 @@
             <div class="modal-gallery" id="modal-gallery">
                 <!-- Images injected here via JS -->
             </div>
+        </div>
+    </div>
+
+    <!-- Floating Messenger Bubble -->
+    <a href="https://m.me/1016930224830241" target="_blank" class="floating-messenger" aria-label="Message us on Messenger">
+        <i class="fa-brands fa-facebook-messenger"></i>
+        <span class="tooltip">Have a question?</span>
+    </a>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to Top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Lightbox Modal for Gallery -->
+    <div id="lightbox" class="modal lightbox-modal">
+        <span class="close-modal lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Full Screen Preview">
         </div>
     </div>
 
