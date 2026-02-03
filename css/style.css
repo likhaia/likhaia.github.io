@@ -178,23 +178,69 @@ img { max-width: 100%; display: block; border-radius: var(--border-radius); }
 .logo {
     display: flex;
     align-items: center;
+    position: relative;
+    overflow: hidden; /* For shimmer effect */
 }
 
 .logo-img {
-    height: 50px; /* Adjust based on navbar height */
+    height: 50px;
     width: auto;
     transition: var(--transition);
+}
+
+/* Premium Shimmer Effect on Hover */
+.logo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: 0.7s;
+}
+
+.logo:hover::after {
+    left: 150%;
 }
 
 .logo:hover .logo-img {
     transform: scale(1.05);
 }
 
+/* Hero Logo Floating Animation */
+.hero-logo {
+    width: 180px;
+    height: auto;
+    margin-bottom: 30px;
+    filter: brightness(0) invert(1) drop-shadow(0 5px 15px rgba(255,255,255,0.2));
+    transition: var(--transition);
+    animation: float 6s ease-in-out infinite; /* Continuous breathing */
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
 .footer-logo {
     height: 40px;
     width: auto;
     margin-bottom: 15px;
-    filter: brightness(0) invert(1); /* Makes the logo white for the dark footer */
+    filter: brightness(0) invert(1);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.footer-logo:hover {
+    transform: translateY(-5px);
+    filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.5));
 }
 
 .nav-links {
@@ -1012,6 +1058,30 @@ img { max-width: 100%; display: block; border-radius: var(--border-radius); }
     gap: 20px;
 }
 
+.dev-credit {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+}
+
+.dev-link {
+    color: var(--accent-pink);
+    font-weight: 600;
+    margin-left: 5px;
+    border-bottom: 1px solid transparent;
+}
+
+.dev-link:hover {
+    border-color: var(--accent-pink);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .footer-copy {
+        margin-bottom: 15px;
+    }
+}
+
 .footer-socials {
     display: flex;
     gap: 20px;
@@ -1715,6 +1785,37 @@ body.loaded #preloader {
     }
     .feed-item img {
         height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .trust-grid {
+        grid-template-columns: 1fr 1fr; /* 2 columns instead of 1 */
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .trust-item {
+        padding: 15px 10px;
+    }
+
+    .trust-item .icon {
+        font-size: 1.8rem; /* Smaller icons */
+        margin-bottom: 8px;
+    }
+
+    .trust-item h3 {
+        font-size: 0.9rem; /* Smaller titles */
+        margin-bottom: 4px;
+    }
+
+    .trust-item p {
+        font-size: 0.75rem; /* Smaller text */
+        line-height: 1.3;
+    }
+
+    .trust-strip {
+        padding: 30px 0; /* Less vertical space */
     }
 }
 

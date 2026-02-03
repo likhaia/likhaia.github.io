@@ -176,7 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const sampleData = {
         scrapbook: [
             { url: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80', id: 'LW-MS-01' },
-            { url: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=600&q=80', id: 'LW-MS-02' }
+            { url: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=600&q=80', id: 'LW-MS-02' },
+            { url: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=600&q=80', id: 'LW-MS-03' },
+            { url: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=600&q=80', id: 'LW-MS-04' }
         ],
         strip_keychain: [
             { url: 'https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?auto=format&fit=crop&w=600&q=80', id: 'LW-PK-01' },
