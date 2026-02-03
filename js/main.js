@@ -368,4 +368,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Bottom Nav Active State Logic
+    const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');
+    const sections = document.querySelectorAll('section, header');
+
+    window.addEventListener('scroll', () => {
+        let current = "";
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= sectionTop - 100) {
+                current = section.getAttribute("id");
+            }
+        });
+
+        bottomNavItems.forEach((item) => {
+            item.classList.remove("active");
+            if (item.getAttribute("href").includes(current)) {
+                item.classList.add("active");
+            }
+        });
+    });
 });
