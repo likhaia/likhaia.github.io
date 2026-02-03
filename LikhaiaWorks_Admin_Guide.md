@@ -16,14 +16,13 @@ Before updating the website, always put your new photos here:
 ...
 ---
 
-## 🎨 2.5 Creating a Perfect Favicon (Browser Icon)
-If your logo is hard to see in the browser tab, follow these steps:
-1.  Go to **Canva** (or any editor) and create a **500x500 square** project.
-2.  Add a **Large White Circle** that fills the entire square.
-3.  Place your **Logo** in the center of the circle.
-4.  Save it as **`favicon.png`** and upload it to `assets/images/`.
-5.  In `index.html`, update the favicon line to:
-    `<link rel="icon" type="image/png" href="assets/images/favicon.png">`
+## 📖 2.7 Updating the Interactive Flipbook
+To update the virtual preview of your Scrapbook:
+1.  Upload your PDF to **Heyzine.com**.
+2.  Get the **Embed Link** (the one that starts with `https://heyzine.com/flip-book/...`).
+3.  Open **`index.html`**.
+4.  Search for `heyzine-iframe`.
+5.  Replace the `src="..."` with your new Heyzine link.
 
 ---
 

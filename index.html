@@ -169,6 +169,7 @@
                         <p class="price">Starting at ₱89.00</p>
                         <div class="card-actions">
                             <button class="btn-text view-samples-btn" data-category="scrapbook"><i class="fa-regular fa-eye"></i> View Samples</button>
+                            <button class="btn-text flipbook-btn"><i class="fa-solid fa-book-open-reader"></i> Interactive Preview</button>
                             <button class="btn-primary-sm order-btn" data-product="Mini Scrapbook (A6)">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
                         </div>
                     </div>
@@ -620,6 +621,19 @@
         <span class="close-modal lightbox-close">&times;</span>
         <div class="lightbox-content">
             <img id="lightbox-img" src="" alt="Full Screen Preview">
+        </div>
+    </div>
+
+    <!-- Flipbook Modal -->
+    <div id="flipbook-modal" class="modal">
+        <div class="modal-content flipbook-content">
+            <button class="close-modal" id="close-flipbook" aria-label="Close modal">&times;</button>
+            <h3>Scrapbook Interactive Preview</h3>
+            <div class="flipbook-container">
+                <!-- Official Heyzine Flipbook -->
+                <iframe src="https://heyzine.com/flip-book/4b4bbe69e3.html" allowfullscreen allow="clipboard-write" class="heyzine-iframe"></iframe>
+            </div>
+            <p class="form-note">This is a digital preview of our handmade craftbook layout.</p>
         </div>
     </div>
 

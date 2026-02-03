@@ -161,6 +161,25 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('ann-hidden');
     }
 
+    // Flipbook Modal Logic
+    const flipbookModal = document.getElementById('flipbook-modal');
+    const flipbookBtn = document.querySelector('.flipbook-btn');
+    const closeFlipbook = document.getElementById('close-flipbook');
+
+    if (flipbookBtn) {
+        flipbookBtn.addEventListener('click', () => {
+            flipbookModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+
+    if (closeFlipbook) {
+        closeFlipbook.addEventListener('click', () => {
+            flipbookModal.classList.remove('show');
+            document.body.style.overflow = '';
+        });
+    }
+
     // FAQ Accordion
     document.querySelectorAll('.faq-question').forEach(question => {
         question.addEventListener('click', () => {
