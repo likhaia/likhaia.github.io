@@ -129,25 +129,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Category Filtering Logic
     const filterBtns = document.querySelectorAll('.filter-btn');
     const productCards = document.querySelectorAll('.product-grid article');
+    const searchInput = document.getElementById('product-search');
 
+    const filterProducts = () => {
+        const searchValue = searchInput.value.toLowerCase();
+        const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+
+        productCards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            const desc = card.querySelector('p').innerText.toLowerCase();
+            const category = card.getAttribute('data-category');
+            
+            const matchesSearch = title.includes(searchValue) || desc.includes(searchValue);
+            const matchesCategory = activeFilter === 'all' || category === activeFilter;
+
+            if (matchesSearch && matchesCategory) {
+                card.classList.remove('hide');
+                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }, 10);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.8)';
+                setTimeout(() => card.classList.add('hide'), 400);
+            }
+        });
+    };
+
+    // Filter Button Click
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            const filter = btn.getAttribute('data-filter');
-
-            productCards.forEach(card => {
-                if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                    card.classList.remove('hide');
-                    setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }, 10);
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.8)';
-                    setTimeout(() => card.classList.add('hide'), 400);
-                }
-            });
+            filterProducts(); // Re-run filter
         });
     });
+
+    // Search Input Keyup
+    if (searchInput) {
+        searchInput.addEventListener('keyup', filterProducts);
+    }
 
     // Announcement Bar
     const closeAnn = document.getElementById('close-ann');
@@ -453,16 +472,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Read More Logic for Mobile
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.card-content p:not(.price)').forEach(p => {
+            if (p.innerText.length > 60) {
+                p.classList.add('desc-collapsed');
+                const btn = document.createElement('span');
+                btn.className = 'read-more-link';
+                btn.innerText = 'Read More';
+                p.parentNode.insertBefore(btn, p.nextSibling);
+                
+                btn.addEventListener('click', () => {
+                    p.classList.toggle('desc-collapsed');
+                    btn.innerText = p.classList.contains('desc-collapsed') ? 'Read More' : 'Show Less';
+                });
+            }
+        });
+    }
+
     // Bottom Nav Active State Logic
     const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');
     const sections = document.querySelectorAll('section, header');
 
     window.addEventListener('scroll', () => {
         let current = "";
+        const scrollY = window.scrollY;
+
         sections.forEach((section) => {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (window.scrollY >= sectionTop - 100) {
+            if (scrollY >= sectionTop - 100) {
                 current = section.getAttribute("id");
             }
         });
