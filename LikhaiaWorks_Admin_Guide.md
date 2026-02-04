@@ -14,15 +14,17 @@ Before updating the website, always put your new photos here:
 
 ## 🖼️ 2. Changing Main Images
 ...
+    `<link rel="icon" type="image/png" href="assets/images/favicon.png">`
+
 ---
 
-## 📖 2.7 Updating the Interactive Flipbook
-To update the virtual preview of your Scrapbook:
-1.  Upload your PDF to **Heyzine.com**.
-2.  Get the **Embed Link** (the one that starts with `https://heyzine.com/flip-book/...`).
-3.  Open **`index.html`**.
-4.  Search for `heyzine-iframe`.
-5.  Replace the `src="..."` with your new Heyzine link.
+## 🌐 2.6 Creating a Pro Social Share Banner
+When you share your link on Messenger/Facebook, you want it to look amazing.
+1.  Create a **1200 x 630 pixel** design (this is the standard size).
+2.  Put your logo in the center, add your tagline ("Handmade with Love"), and maybe a collage of your best products in the background.
+3.  Save it as **`social-share.jpg`**.
+4.  Upload it to the `assets/images/` folder.
+5.  *Note: It may take Facebook a few hours to "refresh" their cache and see the new image.*
 
 ---
 
