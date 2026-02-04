@@ -255,7 +255,7 @@
                         <p class="price">Custom Pricing</p>
                         <div class="card-actions">
                             <button class="btn-text view-samples-btn" data-category="gifts"><i class="fa-regular fa-eye"></i> View Samples</button>
-                            <button class="btn-primary-sm order-btn" data-product="Custom Gift Set">Order Now <i class="fa-solid fa-bag-shopping"></i></button>
+                            <button class="btn-primary-sm calc-trigger-btn">Build Box <i class="fa-solid fa-calculator"></i></button>
                         </div>
                     </div>
                 </article>
@@ -542,6 +542,7 @@
             <div class="footer-bottom">
                 <div class="footer-copy">
                     <p>&copy; 2026 LIKHAIAWORKS. All rights reserved.</p>
+                    <p class="feedback-link"><a href="https://m.me/1016930224830241?text=I%20want%20to%20leave%20a%20feedback!" target="_blank">Received an order? Leave a review <i class="fa-solid fa-star"></i></a></p>
                     <p class="dev-credit">Powered by <strong>Xivam x Likhaia</strong> | <a href="https://m.me/1016930224830241?text=Hi%20Xivam!%20I%20saw%20the%20LikhaiaWorks%20website%20and%20I'm%20interested%20in%20getting%20my%20own%20website.%20Can%20you%20help%20me?" target="_blank" class="dev-link">Get your own website <i class="fa-solid fa-rocket"></i></a></p>
                 </div>
                 <div class="footer-socials">
@@ -621,6 +622,66 @@
         <span class="close-modal lightbox-close">&times;</span>
         <div class="lightbox-content">
             <img id="lightbox-img" src="" alt="Full Screen Preview">
+        </div>
+    </div>
+
+    <!-- Gift Box Calculator Modal -->
+    <div id="calculator-modal" class="modal">
+        <div class="modal-content calc-content">
+            <button class="close-modal" id="close-calc" aria-label="Close modal">&times;</button>
+            <h3>Build Your Gift Box</h3>
+            <div class="calc-grid">
+                <div class="calc-group">
+                    <h4>1. Choose Base</h4>
+                    <label class="calc-option">
+                        <input type="radio" name="calc-base" value="40" checked>
+                        <span>Corrugated Box (Small) - ₱40</span>
+                    </label>
+                    <label class="calc-option">
+                        <input type="radio" name="calc-base" value="60">
+                        <span>Corrugated Box (Medium) - ₱60</span>
+                    </label>
+                </div>
+                
+                <div class="calc-group">
+                    <h4>2. Add-ons</h4>
+                    <label class="calc-option">
+                        <input type="checkbox" class="calc-addon" value="15">
+                        <span>Shredded Paper + Ribbon (+₱15)</span>
+                    </label>
+                    <label class="calc-option">
+                        <input type="checkbox" class="calc-addon" value="25">
+                        <span>Dried Flower Accent (+₱25)</span>
+                    </label>
+                    <label class="calc-option">
+                        <input type="checkbox" class="calc-addon" value="30">
+                        <span>Dedication Card (+₱30)</span>
+                    </label>
+                </div>
+
+                <div class="calc-group">
+                    <h4>3. Contents</h4>
+                    <label class="calc-option">
+                        <input type="checkbox" class="calc-addon" value="49">
+                        <span>10 pcs Polaroids (+₱49)</span>
+                    </label>
+                    <label class="calc-option">
+                        <input type="checkbox" class="calc-addon" value="35">
+                        <span>1 Keychain (+₱35)</span>
+                    </label>
+                    <label class="calc-option">
+                        <input type="checkbox" class="calc-addon" value="25">
+                        <span>1 Sticker Sheet (+₱25)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="calc-total-box">
+                <div class="calc-total-label">Estimated Total:</div>
+                <div class="calc-total-price">₱<span id="calc-total">40</span></div>
+            </div>
+            
+            <button class="btn-primary-sm order-calc-btn" style="width:100%; margin-top:15px; justify-content:center;">Order This Combination</button>
         </div>
     </div>
 

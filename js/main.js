@@ -376,6 +376,69 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Gift Box Calculator Logic
+    const calcModal = document.getElementById('calculator-modal');
+    const closeCalc = document.getElementById('close-calc');
+    const calcTrigger = document.querySelector('.calc-trigger-btn');
+    const totalDisplay = document.getElementById('calc-total');
+    const calcOrderBtn = document.querySelector('.order-calc-btn');
+
+    if (calcTrigger) {
+        calcTrigger.addEventListener('click', () => {
+            calcModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            calculateTotal(); // Init
+        });
+    }
+
+    if (closeCalc) {
+        closeCalc.addEventListener('click', () => {
+            calcModal.classList.remove('show');
+            document.body.style.overflow = '';
+        });
+    }
+
+    function calculateTotal() {
+        let total = 0;
+        
+        // Get Base
+        const base = document.querySelector('input[name="calc-base"]:checked');
+        if (base) total += parseInt(base.value);
+
+        // Get Addons
+        document.querySelectorAll('.calc-addon:checked').forEach(addon => {
+            total += parseInt(addon.value);
+        });
+
+        totalDisplay.innerText = total;
+    }
+
+    // Listen for changes
+    document.querySelectorAll('input[name="calc-base"], .calc-addon').forEach(input => {
+        input.addEventListener('change', calculateTotal);
+    });
+
+    // Order from Calculator
+    if (calcOrderBtn) {
+        calcOrderBtn.addEventListener('click', () => {
+            // Build the details string
+            let details = "Base: " + document.querySelector('input[name="calc-base"]:checked').parentElement.innerText.trim();
+            document.querySelectorAll('.calc-addon:checked').forEach(addon => {
+                details += ", " + addon.parentElement.innerText.trim();
+            });
+            details += ". Total Est: ₱" + totalDisplay.innerText;
+
+            // Close Calc and Open Order Modal
+            calcModal.classList.remove('show');
+            openOrderModal('Custom Gift Set');
+            
+            // Pre-fill the textarea
+            setTimeout(() => {
+                document.getElementById('order-details').value = details;
+            }, 100);
+        });
+    }
+
     // Lightbox Logic
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likhaia Works | Links</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #310a5d;
+            --accent-pink: #d63384;
+            --bg-light: #f8f9fa;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: white;
+            padding: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .links-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(49, 10, 93, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .link-btn.highlight {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .link-btn.highlight:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+        }
+
+        .socials {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .socials a {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .socials a:hover { color: var(--accent-pink); }
+    </style>
+</head>
+<body>
+
+    <img src="assets/images/logo.png" alt="Likhaia Works" class="profile-img">
+    <h1>LIKHAIAWORKS</h1>
+    <p>Handmade with stories, memories, and love.</p>
+
+    <div class="links-container">
+        <a href="index.html" class="link-btn highlight">
+            <i class="fa-solid fa-shop"></i> Visit Official Website
+        </a>
+        <a href="https://m.me/1016930224830241" target="_blank" class="link-btn">
+            <i class="fa-brands fa-facebook-messenger"></i> Chat on Messenger
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61586971808917" target="_blank" class="link-btn">
+            <i class="fa-brands fa-facebook"></i> Facebook Page
+        </a>
+        <a href="https://www.tiktok.com/@likhaia.works" target="_blank" class="link-btn">
+            <i class="fa-brands fa-tiktok"></i> TikTok
+        </a>
+    </div>
+
+    <div class="socials">
+        <a href="https://www.facebook.com/profile.php?id=61586971808917"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.tiktok.com/@likhaia.works"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="mailto:likhaiaworks@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+
+</body>
+</html>

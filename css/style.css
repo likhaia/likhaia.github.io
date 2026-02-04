@@ -1520,6 +1520,61 @@ body.loaded #preloader {
     right: 30px !important;
 }
 
+/* Calculator Modal */
+.calc-content {
+    max-width: 600px;
+}
+
+.calc-grid {
+    display: grid;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.calc-group h4 {
+    font-size: 1rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.calc-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.calc-option:hover {
+    background: var(--bg-light);
+}
+
+.calc-total-box {
+    background: var(--bg-light);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    border: 1px solid #eee;
+}
+
+.calc-total-label {
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.calc-total-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
 /* Announcement Bar */
 .announcement-bar {
     background: linear-gradient(90deg, var(--primary-color), var(--accent-pink));
