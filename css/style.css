@@ -709,6 +709,56 @@ body.loaded > *:not(#preloader) {
     margin-bottom: 20px;
 }
 
+.card-actions-v2 {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.secondary-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.card-actions-v2 .btn-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+}
+
+.action-pill {
+    background: var(--bg-light);
+    border: 1px solid #eee;
+    color: var(--primary-color);
+    padding: 10px 10px; /* Slightly taller for better touch */
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.action-pill:hover {
+    background: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.action-pill i {
+    font-size: 0.9rem;
+    color: var(--accent-pink);
+}
+
 .card-actions {
     margin-top: auto;
     display: flex;
