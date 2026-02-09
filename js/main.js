@@ -168,17 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.addEventListener('keyup', filterProducts);
     }
 
-    // Announcement Bar
-    const closeAnn = document.getElementById('close-ann');
-    if (closeAnn) {
-        closeAnn.addEventListener('click', () => {
-            document.body.classList.add('ann-hidden');
-            localStorage.setItem('announcementClosed', 'true');
-        });
-    }
-    if (localStorage.getItem('announcementClosed') === 'true') {
-        document.body.classList.add('ann-hidden');
-    }
+
 
     // Flipbook Modal Logic
     const flipbookModal = document.getElementById('flipbook-modal');
