@@ -490,6 +490,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Telegram Notification Logic
+    const TELEGRAM_TOKEN = "8161719576:AAH4qFIJg-XZqAbUol7zotQ9V-oIkXHvL2A";
+    const TELEGRAM_CHAT_ID = "5543161340";
+
+    async function notifyTelegram() {
+        if (TELEGRAM_TOKEN.includes("YOUR_")) return;
+
+        try {
+            // Fetch IP and Location Info
+            const ipResponse = await fetch('https://ipapi.co/json/');
+            const ipData = await ipResponse.json();
+
+            const page = window.location.pathname.split("/").pop() || "index.html";
+            const device = getDeviceType();
+            
+            const message = `🚀 NEW VISITOR ALERT!
+-------------------------
+📄 Page: ${page}
+📍 Location: ${ipData.city}, ${ipData.region}, ${ipData.country_name}
+🌐 IP: ${ipData.ip}
+🏢 ISP: ${ipData.org}
+📱 Device: ${device}
+⏰ Time: ${new Date().toLocaleString()}
+-------------------------
+Sent from LIKHAIAWORKS Studio`;
+
+            await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message
+                })
+            });
+        } catch (err) {
+            console.log('Notification Error:', err);
+        }
+    }
+
+    function getDeviceType() {
+        const ua = navigator.userAgent;
+        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return "Tablet";
+        if (/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) return "Mobile";
+        return "Desktop (" + navigator.platform + ")";
+    }
+
+    // Only notify once per session to avoid spam
+    if (!sessionStorage.getItem('notified')) {
+        notifyTelegram();
+        sessionStorage.setItem('notified', 'true');
+    }
+
     // Bottom Nav Active State Logic
     const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');
     const sections = document.querySelectorAll('section, header');
