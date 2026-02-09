@@ -325,7 +325,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const closeModal = () => {
         document.querySelectorAll('.modal').forEach(m => m.classList.remove('show'));
-        document.body.style.overflow = '';
+        // Allow transition to finish before restoring scroll
+        setTimeout(() => {
+            if (!document.querySelector('.modal.show')) {
+                document.body.style.overflow = '';
+            }
+        }, 400);
     };
     document.querySelectorAll('.close-modal').forEach(btn => btn.addEventListener('click', closeModal));
     window.addEventListener('click', (e) => { if (e.target.classList.contains('modal')) closeModal(); });
@@ -558,6 +563,19 @@ document.addEventListener('DOMContentLoaded', () => {
         notifyTelegram();
         sessionStorage.setItem('notified', 'true');
     }
+
+    // Video Button Logic
+    document.querySelectorAll('.video-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const videoLink = btn.getAttribute('data-video-link');
+            if (videoLink) {
+                window.open(videoLink, '_blank');
+                notifyTelegram("Watch Video Clicked", `Product: ${btn.closest('.card-content').querySelector('h3').innerText}`);
+            }
+        });
+    });
 
     // Bottom Nav Active State Logic
     const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');

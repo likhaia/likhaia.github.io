@@ -739,6 +739,18 @@ body.loaded > *:not(#preloader) {
     color: var(--primary-color);
 }
 
+.btn-text.video-btn {
+    color: var(--accent-pink);
+    border: 1px solid var(--accent-pink);
+    border-radius: 50px;
+    padding: 8px 15px;
+}
+
+.btn-text.video-btn:hover {
+    background-color: var(--accent-pink);
+    color: white;
+}
+
 /* Instagram Grid */
 .insta-grid {
     display: grid;
@@ -1286,6 +1298,9 @@ body.loaded > *:not(#preloader) {
     position: relative;
     overflow-y: auto;
     box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    transform: translateY(30px); /* Start slightly down */
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
     transform: translateY(20px);
     transition: transform 0.3s ease;
 }
@@ -1305,8 +1320,9 @@ body.loaded > *:not(#preloader) {
         border-radius: 20px 20px 0 0; /* Rounded top corners only */
         padding: 25px 20px 40px; /* More padding at bottom for safe area */
         max-height: 85vh; /* Taller on mobile */
-        transform: translateY(100%); /* Start off-screen */
+        transform: translateY(100%); /* Slide all the way down */
         margin: 0; /* Remove default margins */
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     .modal.show .modal-content {
@@ -2040,6 +2056,7 @@ body.loaded #preloader {
 .flipbook-content {
     max-width: 1000px;
     width: 95%;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 @media (max-width: 768px) and (orientation: portrait) {
@@ -2077,7 +2094,17 @@ body.loaded #preloader {
     border: none;
 }
 
-/* Quality Promise */
+.btn-text.video-btn {
+    color: var(--accent-pink);
+    border: 1px solid var(--accent-pink);
+    border-radius: 50px;
+    padding: 8px 15px;
+}
+
+.btn-text.video-btn:hover {
+    background-color: var(--accent-pink);
+    color: white;
+}
 .promise-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
