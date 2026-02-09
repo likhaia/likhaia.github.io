@@ -273,7 +273,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     const id = selBtn.getAttribute('data-id');
                     const prod = selBtn.getAttribute('data-product');
                     sampleModal.classList.remove('show');
+                    notifyTelegram("Order This Clicked", `ID: ${id} | ${prod}`);
                     openOrderModal(prod, id);
+                });
+            });
+
+            // Re-add copy ID events
+            modalGallery.querySelectorAll('.copy-id-btn').forEach(copyBtn => {
+                copyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = copyBtn.getAttribute('data-id');
+                    notifyTelegram("Copy ID", `Ref Code: ${id}`);
+                    navigator.clipboard.writeText(id).then(() => {
+                        const originalHTML = copyBtn.innerHTML;
+                        copyBtn.innerHTML = '<i class="fa-solid fa-check" style="color: #4CAF50;"></i>';
+                        setTimeout(() => { copyBtn.innerHTML = originalHTML; }, 2000);
+                    });
                 });
             });
         });
@@ -305,6 +320,9 @@ document.addEventListener('DOMContentLoaded', () => {
         orderGuide.innerText = productGuides[product] || 'Please include size, color, and design notes.';
         orderModal.classList.add('show');
         document.body.style.overflow = 'hidden';
+
+        // Notify Telegram
+        notifyTelegram("Click Order Now", `Product: ${product} ${code ? '(Ref: ' + code + ')' : ''}`);
     };
 
     document.querySelectorAll('.order-btn').forEach(btn => {
@@ -325,12 +343,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Send Order Logic
     document.getElementById('send-messenger').addEventListener('click', () => {
         const msg = generateMessage();
-        if(msg) window.open(`https://m.me/1016930224830241?text=${encodeURIComponent(msg)}`, '_blank');
+        if(msg) {
+            notifyTelegram("Order Sent", "via Messenger");
+            window.open(`https://m.me/1016930224830241?text=${encodeURIComponent(msg)}`, '_blank');
+        }
     });
 
     document.getElementById('send-email').addEventListener('click', () => {
         const msg = generateMessage();
         if(msg) {
+            notifyTelegram("Order Sent", "via Email");
             const product = productNameInput.value;
             window.location.href = `mailto:likhaiaworks@gmail.com?subject=Order Inquiry: ${product}&body=${encodeURIComponent(msg)}`;
         }
@@ -348,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const shareBtn = document.getElementById('share-shop');
     if (shareBtn) {
         shareBtn.addEventListener('click', async () => {
+            notifyTelegram("Share Shop Clicked");
             if (navigator.share) {
                 try { await navigator.share({ title: 'Likhaia Prints & Craft Studio', text: 'Beautiful handmade gifts!', url: window.location.href }); } catch (err) {}
             } else { navigator.clipboard.writeText(window.location.href); alert('Shop link copied!'); }
@@ -407,6 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
             calcModal.classList.add('show');
             document.body.style.overflow = 'hidden';
             calculateTotal(); // Init
+            notifyTelegram("Open Calculator", "Gift Box Builder");
         });
     }
 
@@ -494,27 +518,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const TELEGRAM_TOKEN = "8161719576:AAH4qFIJg-XZqAbUol7zotQ9V-oIkXHvL2A";
     const TELEGRAM_CHAT_ID = "5543161340";
 
-    async function notifyTelegram() {
+    async function notifyTelegram(action = "Page Visit", detail = "") {
         if (TELEGRAM_TOKEN.includes("YOUR_")) return;
 
         try {
-            // Fetch IP and Location Info
-            const ipResponse = await fetch('https://ipapi.co/json/');
-            const ipData = await ipResponse.json();
+            // Fetch IP and Location Info (Cached in session to avoid multiple API calls)
+            let ipData = JSON.parse(sessionStorage.getItem('ipData'));
+            if (!ipData) {
+                const ipResponse = await fetch('https://ipapi.co/json/');
+                ipData = await ipResponse.json();
+                sessionStorage.setItem('ipData', JSON.stringify(ipData));
+            }
 
             const page = window.location.pathname.split("/").pop() || "index.html";
             const device = getDeviceType();
             
-            const message = `🚀 NEW VISITOR ALERT!
+            const message = `✨ LIKHAIA ACTIVITY ALERT
 -------------------------
+🔔 Action: ${action}
+📦 Details: ${detail || 'None'}
 📄 Page: ${page}
-📍 Location: ${ipData.city}, ${ipData.region}, ${ipData.country_name}
-🌐 IP: ${ipData.ip}
-🏢 ISP: ${ipData.org}
+📍 Location: ${ipData.city}, ${ipData.country_name}
 📱 Device: ${device}
 ⏰ Time: ${new Date().toLocaleString()}
--------------------------
-Sent from LIKHAIAWORKS Studio`;
+-------------------------`;
 
             await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
                 method: 'POST',
