@@ -3,139 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Likhaia Works | Links</title>
+    <title>LIKHAIAWORKS | Official Links</title>
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
             --primary-color: #310a5d;
             --accent-pink: #d63384;
-            --bg-light: #f8f9fa;
+            --bg-gradient: linear-gradient(135deg, #FFEEEF 0%, #D7FFFE 100%);
+            --transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Outfit', sans-serif;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
             padding: 40px 20px;
-            color: #333;
+            color: var(--primary-color);
+        }
+
+        .profile-container {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
         }
 
         .profile-img {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            object-fit: contain;
             background: white;
             padding: 5px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(49, 10, 93, 0.15);
             margin-bottom: 15px;
+            border: 2px solid white;
         }
 
-        h1 {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 5px;
+        h1 { font-size: 1.6rem; letter-spacing: 1px; font-weight: 700; margin-bottom: 5px; }
+        .tagline { color: #666; font-size: 0.9rem; font-weight: 400; }
+
+        /* Live Status Indicator */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-top: 15px;
         }
 
-        p {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 0.9rem;
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+            animation: pulse 2s infinite;
         }
 
-        .links-container {
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 1; }
+            70% { transform: scale(1.5); opacity: 0; }
+            100% { transform: scale(0.95); opacity: 0; }
+        }
+
+        /* Links Container */
+        .links-wrapper {
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
-        .link-btn {
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            margin: 20px 0 5px 15px;
+        }
+
+        .link-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 18px 25px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: white;
-            padding: 15px;
-            border-radius: 50px;
+            gap: 15px;
             text-decoration: none;
             color: var(--primary-color);
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid transparent;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
-        .link-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(49, 10, 93, 0.15);
+        .link-card:hover {
+            background: white;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(49, 10, 93, 0.1);
             border-color: var(--primary-color);
         }
 
-        .link-btn.highlight {
+        .link-card i {
+            font-size: 1.4rem;
+            width: 30px;
+            text-align: center;
+            color: var(--accent-pink);
+        }
+
+        .link-card.main-site {
             background: var(--primary-color);
             color: white;
-        }
-        
-        .link-btn.highlight:hover {
-            background: var(--accent-pink);
-            border-color: var(--accent-pink);
+            border: none;
+            animation: pulse-border 2s infinite;
         }
 
-        .socials {
-            margin-top: 40px;
+        .link-card.main-site i { color: white; }
+
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(49, 10, 93, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(49, 10, 93, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(49, 10, 93, 0); }
+        }
+
+        /* Socials */
+        .social-row {
             display: flex;
             gap: 20px;
+            margin-top: 40px;
         }
 
-        .socials a {
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
             color: var(--primary-color);
-            font-size: 1.5rem;
-            transition: color 0.3s;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        .socials a:hover { color: var(--accent-pink); }
+        .social-icon:hover {
+            background: var(--accent-pink);
+            color: white;
+            transform: translateY(-5px) rotate(10deg);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer-text {
+            margin-top: auto;
+            padding-top: 40px;
+            font-size: 0.75rem;
+            color: #888;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
 
-    <img src="assets/images/logo.png" alt="Likhaia Works" class="profile-img">
-    <h1>LIKHAIAWORKS</h1>
-    <p>Handmade with stories, memories, and love.</p>
+    <div class="profile-container">
+        <img src="assets/images/logo.png" alt="Likhaia Works" class="profile-img">
+        <h1>LIKHAIAWORKS</h1>
+        <p class="tagline">Handmade with stories, memories, and love.</p>
+        
+        <div class="status-pill">
+            <span class="dot" id="status-dot"></span>
+            <span id="status-text">Accepting Orders</span>
+        </div>
+    </div>
 
-    <div class="links-container">
-        <a href="index.html" class="link-btn highlight">
-            <i class="fa-solid fa-shop"></i> Visit Official Website
+    <div class="links-wrapper">
+        <p class="section-label">Main Studio</p>
+        <a href="index.html" class="link-card main-site">
+            <i class="fa-solid fa-shop"></i>
+            Visit Official Shop & Catalog
         </a>
-        <a href="https://m.me/1016930224830241" target="_blank" class="link-btn">
-            <i class="fa-brands fa-facebook-messenger"></i> Chat on Messenger
+
+        <p class="section-label">Order Support</p>
+        <a href="https://m.me/1016930224830241" target="_blank" class="link-card">
+            <i class="fa-brands fa-facebook-messenger"></i>
+            Direct Order via Messenger
         </a>
-        <a href="https://www.facebook.com/profile.php?id=61586971808917" target="_blank" class="link-btn">
-            <i class="fa-brands fa-facebook"></i> Facebook Page
+        <a href="track.html" class="link-card">
+            <i class="fa-solid fa-truck-ramp-box"></i>
+            Track My Order Status
         </a>
-        <a href="https://www.tiktok.com/@likhaia.works" target="_blank" class="link-btn">
-            <i class="fa-brands fa-tiktok"></i> TikTok
+        <a href="policies.html" class="link-card">
+            <i class="fa-solid fa-scroll"></i>
+            Shipping & Payment Policies
+        </a>
+
+        <p class="section-label">Community</p>
+        <a href="review.html" class="link-card">
+            <i class="fa-solid fa-heart-circle-check"></i>
+            Share Your Likha (Leave a Review)
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61586971808917" target="_blank" class="link-card">
+            <i class="fa-brands fa-facebook"></i>
+            Follow our Facebook Page
         </a>
     </div>
 
-    <div class="socials">
-        <a href="https://www.facebook.com/profile.php?id=61586971808917"><i class="fa-brands fa-facebook"></i></a>
-        <a href="https://www.tiktok.com/@likhaia.works"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="mailto:likhaiaworks@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+    <div class="social-row">
+        <a href="https://www.tiktok.com/@likhaia.works" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61586971808917" target="_blank" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+        <a href="mailto:likhaiaworks@gmail.com" class="social-icon"><i class="fa-solid fa-envelope"></i></a>
     </div>
 
+    <p class="footer-text">Handcrafted in Valenzuela City ✨</p>
+
+    <script>
+        // Sync Live Status with Time of Day
+        function updateStatus() {
+            const hour = new Date().getHours();
+            const statusText = document.getElementById('status-text');
+            const statusDot = document.getElementById('status-dot');
+
+            if (hour >= 8 && hour < 20) {
+                statusText.innerText = "Accepting Orders";
+                statusDot.style.background = "#4CAF50";
+            } else {
+                statusText.innerText = "Processing Inquiries";
+                statusDot.style.background = "#FFC107";
+            }
+        }
+        updateStatus();
+    </script>
 </body>
 </html>
