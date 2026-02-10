@@ -1738,8 +1738,7 @@ body.loaded > *:not(#preloader) {
     box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
     transform: translateY(30px); /* Start slightly down */
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
+    
 }
 
 .modal.show .modal-content {
