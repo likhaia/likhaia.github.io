@@ -611,6 +611,79 @@ Sent from LIKHAIAWORKS Website`;
         sessionStorage.setItem('notified', 'true');
     }
 
+    // --- ULTIMATE FLOATING PLAYER JS ---
+    const player = document.getElementById('floating-player');
+    const header = document.getElementById('player-header');
+    const minBtn = document.getElementById('player-min-toggle');
+    const miniIcon = document.getElementById('player-icon');
+
+    if (player && header) {
+        // 1. Toggle Logic
+        const toggle = () => player.classList.toggle('is-minimized');
+        minBtn.onclick = (e) => { e.stopPropagation(); toggle(); };
+        miniIcon.onclick = toggle;
+
+        // 2. Ultra-Stable Dragging Logic
+        let isDragging = false;
+        let startX, startY, initialLeft, initialTop;
+
+        const startDragging = (e) => {
+            if (e.target === minBtn || e.target.closest('.min-btn')) return;
+            
+            isDragging = true;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            startX = clientX;
+            startY = clientY;
+            initialLeft = player.offsetLeft;
+            initialTop = player.offsetTop;
+            
+            player.style.transition = 'none';
+            player.style.bottom = 'auto'; // Break CSS anchor
+            player.style.right = 'auto';  // Break CSS anchor
+        };
+
+        const whileDragging = (e) => {
+            if (!isDragging) return;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            const dx = clientX - startX;
+            const dy = clientY - startY;
+            
+            player.style.left = (initialLeft + dx) + 'px';
+            player.style.top = (initialTop + dy) + 'px';
+        };
+
+        const stopDragging = () => {
+            isDragging = false;
+            player.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        };
+
+        header.onmousedown = startDragging;
+        header.ontouchstart = startDragging;
+        
+        document.addEventListener('mousemove', whileDragging);
+        document.addEventListener('touchmove', whileDragging, { passive: false });
+        
+        document.addEventListener('mouseup', stopDragging);
+        document.addEventListener('touchend', stopDragging);
+    }
+
+    // Body Loaded Trigger
+    setTimeout(() => { document.body.classList.add('loaded'); }, 500);
+
+    // Custom Music Card Logic
+    const heartBtn = document.querySelector('.heart-btn');
+    if (heartBtn) {
+        heartBtn.addEventListener('click', () => {
+            heartBtn.classList.toggle('active');
+            heartBtn.classList.toggle('fa-regular');
+            heartBtn.classList.toggle('fa-solid');
+        });
+    }
+
     // Video Button Logic
     document.querySelectorAll('.video-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {

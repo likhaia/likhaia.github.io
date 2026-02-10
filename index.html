@@ -135,15 +135,71 @@
                     <p>Handmade with love,</p>
                     <div class="handwritten-signature">Likhaia</div>
                 </div>
-                
-                <!-- Studio Vibe Player -->
-                <div class="studio-player">
-                    <p class="player-title"><i class="fa-brands fa-spotify"></i> Studio Ambience:</p>
-                    <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwovXruN0?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                </div>
             </div>
         </div>
     </section>
+
+    <!-- ULTIMATE CUTE FLOATING PLAYER -->
+    <div id="floating-player" class="player-container">
+        <!-- Drag Handle (The Header) -->
+        <div id="player-header" class="player-header">
+            <span class="player-brand">Likhaia Music</span>
+            <button id="player-min-toggle" class="min-btn"><i class="fa-solid fa-minus"></i></button>
+        </div>
+
+        <!-- The Polaroid Card -->
+        <div id="player-body" class="player-card">
+            <div class="music-card-inner">
+                <div class="music-card-header">Likhaia</div>
+                <div class="music-card-image">
+                    <img src="https://i.scdn.co/image/ab67616d0000b2730062a96966954890912073af" alt="Pagsamo - Arthur Nery">
+                </div>
+                <div class="music-card-content">
+                    <div class="song-info">
+                        <div class="song-text">
+                            <h4 class="song-name">Pagsamo</h4>
+                            <p class="artist-name">Arthur Nery</p>
+                        </div>
+                        <i class="fa-solid fa-heart heart-btn"></i>
+                    </div>
+                    
+                    <div class="music-progress">
+                        <div class="progress-rail">
+                            <div class="progress-fill"></div>
+                            <div class="progress-dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="music-controls">
+                        <i class="fa-solid fa-shuffle"></i>
+                        <i class="fa-solid fa-backward-step"></i>
+                        <div class="play-wrapper">
+                            <i class="fa-solid fa-circle-play play-main"></i>
+                            <!-- The real engine is hidden exactly on top of the play button -->
+                            <iframe src="https://open.spotify.com/embed/track/4FVZYiCvdLIX8NpcY0lzda?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" class="stealth-spotify-engine"></iframe>
+                        </div>
+                        <i class="fa-solid fa-forward-step"></i>
+                        <i class="fa-solid fa-repeat"></i>
+                    </div>
+
+                    <div class="spotify-code-area">
+                        <div class="spotify-logo-small">
+                            <i class="fa-brands fa-spotify"></i>
+                        </div>
+                        <div class="spotify-waves">
+                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Icon when Minimized -->
+        <div id="player-icon" class="player-mini-circle">
+            <i class="fa-solid fa-music"></i>
+            <div class="music-waves"><span></span><span></span><span></span></div>
+        </div>
+    </div>
 
     <!-- Products / Services -->
     <section id="products" class="section">
