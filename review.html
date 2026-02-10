@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Love | Likhaia Works</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #310a5d;
+            --accent-pink: #d63384;
+            --bg-gradient: linear-gradient(135deg, #FFEEEF 0%, #D7FFFE 100%);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--primary-color);
+        }
+
+        .review-card {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(49, 10, 93, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-small { height: 60px; margin-bottom: 20px; }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 10px; }
+        p.subtitle { color: #666; margin-bottom: 30px; font-size: 0.95rem; }
+
+        /* Star Rating */
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .star {
+            font-size: 2.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .star.active { color: #FFD700; transform: scale(1.2); }
+        .star:hover { transform: scale(1.3); }
+
+        /* Dynamic Feedback Sections */
+        .feedback-area { display: none; animation: slideUp 0.5s ease forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .reaction-msg { font-weight: 700; font-size: 1.2rem; margin-bottom: 20px; display: block; }
+        
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            font-family: inherit;
+            margin-bottom: 20px;
+            outline: none;
+            resize: none;
+        }
+
+        .input-group { text-align: left; margin-bottom: 20px; }
+        .input-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; }
+        .input-group input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; }
+
+        /* Permission Checkbox */
+        .permission-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            cursor: pointer;
+        }
+
+        .permission-box input { margin-top: 4px; accent-color: var(--accent-pink); }
+        .permission-box span { font-size: 0.8rem; line-height: 1.4; color: #555; }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 50px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover { background: var(--accent-pink); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(214, 51, 132, 0.3); }
+
+        /* Success State */
+        .success-state { display: none; text-align: center; }
+        .success-icon { font-size: 4rem; color: #4CAF50; margin-bottom: 20px; }
+        .coupon-code {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 10px 20px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            font-weight: 700;
+            margin: 20px 0;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="review-card">
+        <div id="review-step-1">
+            <img src="assets/images/logo.png" alt="Likhaia Logo" class="logo-small">
+            <h1>Rate your Likha</h1>
+            <p class="subtitle">How was your experience with our handmade crafts?</p>
+            
+            <div class="stars-container" id="star-rating">
+                <i class="fa-solid fa-star star" data-value="1"></i>
+                <i class="fa-solid fa-star star" data-value="2"></i>
+                <i class="fa-solid fa-star star" data-value="3"></i>
+                <i class="fa-solid fa-star star" data-value="4"></i>
+                <i class="fa-solid fa-star star" data-value="5"></i>
+            </div>
+
+            <div id="feedback-form" class="feedback-area">
+                <span id="reaction-text" class="reaction-msg"></span>
+                
+                <div class="input-group">
+                    <label>Your Name (Optional)</label>
+                    <input type="text" id="customer-name" placeholder="Name or Nickname">
+                </div>
+
+                <div class="input-group">
+                    <label id="msg-label">What can we improve?</label>
+                    <textarea id="customer-message" placeholder="Type your message here..."></textarea>
+                </div>
+
+                <label class="permission-box">
+                    <input type="checkbox" id="allow-post" checked>
+                    <span>I allow Likhaia Works to feature my review on social media and the website to inspire other customers! 📸✨</span>
+                </label>
+
+                <button class="submit-btn" id="submit-review">
+                    Share my Feedback <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="success-view" class="success-state">
+            <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <h2>Thank You!</h2>
+            <p>Your feedback means the world to us.</p>
+            <p>As a token of our love, here is a discount for your next order:</p>
+            <div class="coupon-code">LIKHAIAFAM10</div>
+            <p style="font-size: 0.8rem; color: #888;">Mention this code when you message us again!</p>
+            <br>
+            <a href="index.html" style="color: var(--accent-pink); font-weight: 600; text-decoration: none;">Back to Website</a>
+        </div>
+    </div>
+
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const feedbackArea = document.getElementById('feedback-form');
+        const reactionText = document.getElementById('reaction-text');
+        const msgLabel = document.getElementById('msg-label');
+        let currentRating = 0;
+
+        // Telegram Details (Reusing your Bot info)
+        const TELEGRAM_TOKEN = "8161719576:AAH4qFIJg-XZqAbUol7zotQ9V-oIkXHvL2A";
+        const TELEGRAM_CHAT_ID = "5543161340";
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                currentRating = star.getAttribute('data-value');
+                
+                // Visual update
+                stars.forEach(s => {
+                    s.classList.toggle('active', s.getAttribute('data-value') <= currentRating);
+                });
+
+                // Content update based on rating
+                feedbackArea.style.display = 'block';
+                if (currentRating >= 4) {
+                    reactionText.innerText = "Yay! We're so happy you love it! 😍";
+                    reactionText.style.color = "#d63384";
+                    msgLabel.innerText = "What did you love most about it?";
+                    // Celebrate!
+                    confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#310a5d', '#d63384', '#FFD700']
+                    });
+                } else {
+                    reactionText.innerText = "We want to make it better for you. 🥺";
+                    reactionText.style.color = "#310a5d";
+                    msgLabel.innerText = "How can we improve our crafts or service?";
+                }
+            });
+        });
+
+        document.getElementById('submit-review').addEventListener('click', async () => {
+            const name = document.getElementById('customer-name').value || "Anonymous";
+            const message = document.getElementById('customer-message').value;
+            const allowPost = document.getElementById('allow-post').checked ? "YES ✅" : "No ❌";
+
+            if (!message) { alert("Please type a short message!"); return; }
+
+            // 1. Prepare Telegram Message
+            const tgMessage = `⭐ NEW CUSTOMER REVIEW!
+-------------------------
+Rating: ${currentRating} / 5 Stars
+Customer: ${name}
+Message: ${message}
+Allow Posting: ${allowPost}
+-------------------------
+Studio: LIKHAIAWORKS`;
+
+            // 2. Prepare Messenger Link (for fallback/direct chat)
+            const msgrMessage = `Hi Likhaia! I just rated you ${currentRating} stars on your website. My review: "${message}". ${allowPost === 'YES ✅' ? 'You can post this!' : ''}`;
+            const msgrLink = `https://m.me/1016930224830241?text=${encodeURIComponent(msgrMessage)}`;
+
+            try {
+                // Send to Telegram
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: tgMessage })
+                });
+
+                // Show Success View
+                document.getElementById('review-step-1').style.display = 'none';
+                document.getElementById('success-view').style.display = 'block';
+
+                // Automatically open Messenger after a short delay so they can say hi
+                setTimeout(() => {
+                    if(confirm("Would you like to send this review directly to our Messenger too?")) {
+                        window.open(msgrLink, '_blank');
+                    }
+                }, 2000);
+
+            } catch (err) {
+                alert("Oops! Something went wrong. Please try again.");
+            }
+        });
+    </script>
+</body>
+</html>
