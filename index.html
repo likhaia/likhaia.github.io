@@ -88,7 +88,7 @@
             <p class="hero-subtitle">Handmade with stories, memories, and love.<br>Follow along—this is just the beginning.</p>
             <div class="hero-buttons">
                 <a href="#products" class="btn btn-primary">Explore Collection</a>
-                <a href="#contact" class="btn btn-outline">Get a Quote</a>
+                <button id="start-quiz-btn" class="btn btn-outline" style="background:white; color:var(--primary-color);">Perfect Gift Quiz 🎁</button>
             </div>
         </div>
         <div class="hero-background"></div>
@@ -790,6 +790,41 @@
             <span>Chat</span>
         </a>
     </nav>
+
+    <!-- Gift Quiz Modal -->
+    <div id="quiz-modal" class="modal">
+        <div class="modal-content quiz-modal-content">
+            <button class="close-modal" id="close-quiz" aria-label="Close modal">&times;</button>
+            <div id="quiz-container">
+                <div class="quiz-header">
+                    <span class="sub-title">Gift Recommendation</span>
+                    <h2 id="quiz-question">Who are you buying for?</h2>
+                </div>
+                
+                <div id="quiz-options" class="quiz-options-grid">
+                    <!-- Options injected here -->
+                </div>
+
+                <div class="quiz-progress-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+
+            <!-- Quiz Result View -->
+            <div id="quiz-result" class="quiz-result-view" style="display:none;">
+                <div class="confetti-mini">✨✨✨</div>
+                <h2>Your Perfect Likha:</h2>
+                <div id="result-card-dest"></div>
+                <button class="btn-primary" id="quiz-order-btn" style="width:100%; margin-top:20px; justify-content:center;">Get this Gift Now!</button>
+                <button class="btn-text" id="restart-quiz" style="margin-top:15px; width:100%; justify-content:center;">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flying Animation Placeholder -->
+    <div id="flying-image" class="flying-image"></div>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>

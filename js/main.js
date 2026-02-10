@@ -359,6 +359,172 @@ document.addEventListener('DOMContentLoaded', () => {
         orderRush.addEventListener('change', () => { rushNote.style.display = orderRush.checked ? 'block' : 'none'; });
     }
 
+    // --- GIFT QUIZ LOGIC ---
+    const quizModal = document.getElementById('quiz-modal');
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const quizContainer = document.getElementById('quiz-container');
+    const quizResult = document.getElementById('quiz-result');
+    const quizOptions = document.getElementById('quiz-options');
+    const quizQuestion = document.getElementById('quiz-question');
+    const quizDots = document.querySelectorAll('.quiz-progress-dots .dot');
+    
+    let quizStep = 0;
+    let quizChoices = {};
+
+    const quizData = [
+        {
+            question: "Who are you buying for?",
+            options: [
+                { text: "My Partner / BF / GF", icon: "fa-heart", value: "partner" },
+                { text: "Best Friend", icon: "fa-user-group", value: "friend" },
+                { text: "Family Member", icon: "fa-house-chimney-window", value: "family" },
+                { text: "Myself", icon: "fa-star", value: "self" }
+            ]
+        },
+        {
+            question: "What's the special occasion?",
+            options: [
+                { text: "Anniversary / Monthsary", icon: "fa-calendar-check", value: "anniversary" },
+                { text: "Birthday", icon: "fa-cake-candles", value: "birthday" },
+                { text: "Just Because", icon: "fa-gift", value: "random" }
+            ]
+        },
+        {
+            question: "What's their personality like?",
+            options: [
+                { text: "Sentimental & Sweet", icon: "fa-face-smile-wink", value: "sentimental" },
+                { text: "Music Lover", icon: "fa-music", value: "music" },
+                { text: "Funny / Playful", icon: "fa-face-grin-tears", value: "funny" }
+            ]
+        }
+    ];
+
+    const showQuizStep = () => {
+        const currentData = quizData[quizStep];
+        quizQuestion.innerText = currentData.question;
+        quizOptions.innerHTML = '';
+        
+        currentData.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-option-btn';
+            btn.innerHTML = `<i class="fa-solid ${opt.icon}"></i> ${opt.text}`;
+            btn.onclick = () => handleChoice(opt.value);
+            quizOptions.appendChild(btn);
+        });
+
+        quizDots.forEach((dot, idx) => dot.classList.toggle('active', idx === quizStep));
+    };
+
+    const handleChoice = (val) => {
+        quizChoices[quizStep] = val;
+        if (quizStep < quizData.length - 1) {
+            quizStep++;
+            showQuizStep();
+        } else {
+            showResult();
+        }
+    };
+
+    const showResult = () => {
+        quizContainer.style.display = 'none';
+        quizResult.style.display = 'block';
+        
+        let recommendedId = "prints"; // Default
+        
+        // Logic for recommendation
+        if (quizChoices[2] === "music") recommendedId = "keychains";
+        else if (quizChoices[2] === "sentimental") recommendedId = "prints";
+        else if (quizChoices[0] === "partner") recommendedId = "prints";
+        else recommendedId = "gifts";
+
+        // Find a card from that category
+        const recommendedCard = document.querySelector(`.card[data-category="${recommendedId}"]`) || document.querySelector('.card');
+        const clone = recommendedCard.cloneNode(true);
+        
+        // Clean up clone (remove animations and specific IDs)
+        clone.classList.remove('animate-on-scroll', 'is-visible');
+        clone.style.opacity = '1';
+        clone.style.transform = 'none';
+        
+        const dest = document.getElementById('result-card-dest');
+        dest.innerHTML = '';
+        dest.appendChild(clone);
+
+        const orderBtn = document.getElementById('quiz-order-btn');
+        orderBtn.onclick = () => {
+            closeModal();
+            setTimeout(() => {
+                const originalBtn = recommendedCard.querySelector('.order-btn');
+                if(originalBtn) originalBtn.click();
+            }, 500);
+        };
+    };
+
+    if (startQuizBtn) {
+        startQuizBtn.addEventListener('click', () => {
+            quizStep = 0;
+            quizChoices = {};
+            quizContainer.style.display = 'block';
+            quizResult.style.display = 'none';
+            showQuizStep();
+            quizModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            notifyTelegram("Start Quiz", "Gift Finder");
+        });
+    }
+
+    document.getElementById('restart-quiz').onclick = () => {
+        quizStep = 0;
+        quizChoices = {};
+        quizContainer.style.display = 'block';
+        quizResult.style.display = 'none';
+        showQuizStep();
+    };
+
+    // --- FLYING IMAGE ANIMATION LOGIC ---
+    const flyImage = (startElement, targetElement, imageUrl) => {
+        const flyer = document.getElementById('flying-image');
+        const startRect = startElement.getBoundingClientRect();
+        const targetRect = targetElement.getBoundingClientRect();
+
+        flyer.style.display = 'block';
+        flyer.style.backgroundImage = `url('${imageUrl}')`;
+        flyer.style.width = startRect.width + 'px';
+        flyer.style.height = startRect.height + 'px';
+        flyer.style.top = startRect.top + 'px';
+        flyer.style.left = startRect.left + 'px';
+        flyer.style.opacity = '1';
+        flyer.style.transform = 'scale(1)';
+
+        // Force reflow
+        flyer.offsetHeight;
+
+        // Animate to target
+        flyer.style.top = (targetRect.top + (targetRect.height / 2) - (startRect.height / 2)) + 'px';
+        flyer.style.left = (targetRect.left + (targetRect.width / 2) - (startRect.width / 2)) + 'px';
+        flyer.style.opacity = '0';
+        flyer.style.transform = 'scale(0.2)';
+
+        setTimeout(() => {
+            flyer.style.display = 'none';
+        }, 800);
+    };
+
+    // Override the Order Now button click to include "Fly"
+    document.querySelectorAll('.order-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const card = btn.closest('.card');
+            const cardImg = card.querySelector('img');
+            const modalHeader = document.querySelector('#modal-title');
+            
+            // Trigger fly animation
+            if (cardImg && modalHeader) {
+                flyImage(cardImg, modalHeader, cardImg.src);
+            }
+        });
+    });
+
+    // Helper to close modals
     const closeModal = () => {
         document.querySelectorAll('.modal').forEach(m => m.classList.remove('show'));
         // Allow transition to finish before restoring scroll

@@ -507,6 +507,89 @@ body.loaded .handwritten-signature::after {
     opacity: 0.8;
 }
 
+/* Gift Quiz Styles */
+.quiz-modal-content {
+    max-width: 500px !important;
+    overflow: hidden;
+}
+
+.quiz-options-grid {
+    display: grid;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.quiz-option-btn {
+    padding: 20px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.quiz-option-btn:hover {
+    border-color: var(--accent-pink);
+    background: #fff9fb;
+    transform: translateX(5px);
+}
+
+.quiz-option-btn i {
+    font-size: 1.5rem;
+    color: var(--accent-pink);
+}
+
+.quiz-progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.quiz-progress-dots .dot {
+    width: 10px;
+    height: 10px;
+    background: #eee;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.quiz-progress-dots .dot.active {
+    background: var(--primary-color);
+    width: 25px;
+}
+
+.quiz-result-view {
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+#result-card-dest .card {
+    max-width: 280px;
+    margin: 20px auto;
+}
+
+/* Flying Animation */
+.flying-image {
+    position: fixed;
+    z-index: 10000;
+    pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    display: none;
+}
+
 /* Section Header */
 .section-header {
     text-align: center;
