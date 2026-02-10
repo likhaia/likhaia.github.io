@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Policies | LIKHAIAWORKS</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #310a5d;
+            --accent-pink: #d63384;
+            --bg-gradient: linear-gradient(135deg, #FFEEEF 0%, #D7FFFE 100%);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(49, 10, 93, 0.05);
+        }
+
+        header { text-align: center; margin-bottom: 50px; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary-color); }
+        .back-link { display: inline-block; margin-bottom: 20px; color: var(--accent-pink); font-weight: 600; text-decoration: none; }
+
+        section { margin-bottom: 40px; }
+        h2 { font-size: 1.4rem; color: var(--primary-color); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        h2 i { color: var(--accent-pink); }
+
+        ul { list-style: none; }
+        li { margin-bottom: 10px; padding-left: 25px; position: relative; }
+        li::before { content: '✨'; position: absolute; left: 0; }
+
+        .payment-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary-color);
+            margin-top: 10px;
+        }
+
+        .footer-note { text-align: center; margin-top: 50px; border-top: 1px solid #eee; padding-top: 30px; font-style: italic; color: #888; }
+
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Shop</a>
+        
+        <header>
+            <h1>Studio Policies</h1>
+            <p>Guidelines for a smooth creative journey.</p>
+        </header>
+
+        <section>
+            <h2><i class="fa-solid fa-wallet"></i> Payment Guide</h2>
+            <p>We require **Full Payment** before we begin production of your custom items.</p>
+            <div class="payment-box">
+                <p><strong>Accepted Methods:</strong></p>
+                <p>• GCash / Maya (Scan QR or Number)</p>
+                <p>• BPI Bank Transfer</p>
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="fa-solid fa-truck-fast"></i> Shipping & Handling</h2>
+            <ul>
+                <li><strong>Production Time:</strong> 2-5 days depending on the item and volume.</li>
+                <li><strong>Couriers:</strong> J&T Express (Nationwide) and Lalamove (Valenzuela/Metro Manila).</li>
+                <li><strong>Packaging:</strong> Every order is bubble-wrapped and reinforced to ensure your memories arrive safely.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2><i class="fa-solid fa-rotate-left"></i> Returns & Refunds</h2>
+            <ul>
+                <li><strong>Custom Items:</strong> Due to the personalized nature of our crafts, we **do not accept returns or exchanges** unless the item was damaged during shipping.</li>
+                <li><strong>Proof of Damage:</strong> Please take an unboxing video. We will replace damaged items for free if a video proof is provided.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2><i class="fa-solid fa-camera-retro"></i> Content Usage</h2>
+            <p>We may post photos of finished products on our social media. If your item is a sensitive gift and you'd like us to keep it private, please let us know during ordering!</p>
+        </section>
+
+        <div class="footer-note">
+            Thank you for trusting Likhaia Works! By placing an order, you agree to these terms.
+        </div>
+    </div>
+
+</body>
+</html>

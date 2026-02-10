@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Tracker | LIKHAIAWORKS</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #310a5d;
+            --accent-pink: #d63384;
+            --bg-gradient: linear-gradient(135deg, #FFEEEF 0%, #D7FFFE 100%);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: #333;
+            padding: 40px 20px;
+        }
+
+        .tracker-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(49, 10, 93, 0.1);
+            text-align: center;
+        }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 10px; color: var(--primary-color); }
+        .back-link { display: inline-block; margin-bottom: 20px; color: var(--accent-pink); font-weight: 600; text-decoration: none; }
+
+        .status-header {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .batch-name { font-weight: 700; font-size: 1.2rem; color: var(--primary-color); display: block; margin-bottom: 5px; }
+        .batch-status { color: var(--accent-pink); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+
+        /* Timeline / Steps */
+        .track-timeline {
+            text-align: left;
+            margin-top: 40px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .track-timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #eee;
+        }
+
+        .track-step {
+            position: relative;
+            margin-bottom: 30px;
+            opacity: 0.4;
+        }
+
+        .track-step.active { opacity: 1; }
+        .track-step.done { opacity: 1; color: #888; }
+
+        .track-step::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 3px solid #eee;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .track-step.active::before { border-color: var(--accent-pink); background: var(--accent-pink); }
+        .track-step.done::before { border-color: #4CAF50; background: #4CAF50; }
+
+        .track-step h3 { font-size: 1rem; margin-bottom: 2px; color: inherit; }
+        .track-step p { font-size: 0.85rem; color: #666; }
+
+        .note-box {
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tracker-container">
+        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Shop</a>
+        
+        <h1>Order Tracker</h1>
+        <p>Follow your memories as they are being crafted.</p>
+
+        <div class="status-header">
+            <span id="display-batch" class="batch-name">Loading...</span>
+            <span id="display-status" class="batch-status">---</span>
+        </div>
+
+        <div class="track-timeline" id="timeline-container">
+            <!-- Steps will be auto-generated here -->
+        </div>
+
+        <div class="note-box">
+            <p>Wait times are usually 2-5 days. If you haven't received an update within a week, please message us on Messenger!</p>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================
+           ADMIN CONTROL CENTER
+           Update these 3 things to change the page:
+        ========================================== */
+        const BATCH_NAME = "Batch Feb 10 - Feb 15";
+        const CURRENT_STATUS = "✨ Printing in Progress";
+        const ACTIVE_STEP_NUMBER = 3; // 1 to 5
+        /* ========================================== */
+
+        const steps = [
+            { title: "Order Consultation", desc: "Initial design and details confirmed." },
+            { title: "Payment Received", desc: "Transaction verified. Materials ready." },
+            { title: "In Production", desc: "Currently printing and assembling your items." },
+            { title: "Quality Check", desc: "Final inspection and photography." },
+            { title: "Out for Delivery", desc: "Handed to courier / Ready for pickup." }
+        ];
+
+        function renderTracker() {
+            document.getElementById('display-batch').innerText = BATCH_NAME;
+            document.getElementById('display-status').innerText = CURRENT_STATUS;
+            
+            const container = document.getElementById('timeline-container');
+            container.innerHTML = '';
+
+            steps.forEach((step, index) => {
+                const stepNum = index + 1;
+                let stateClass = "";
+                
+                if (stepNum < ACTIVE_STEP_NUMBER) stateClass = "done";
+                else if (stepNum === ACTIVE_STEP_NUMBER) stateClass = "active";
+
+                container.innerHTML += `
+                    <div class="track-step ${stateClass}">
+                        <h3>${step.title}</h3>
+                        <p>${step.desc}</p>
+                    </div>
+                `;
+            });
+        }
+
+        renderTracker();
+    </script>
+</body>
+</html>
