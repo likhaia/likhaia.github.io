@@ -524,6 +524,55 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- STUDIO HIGHLIGHTS (STORY) LOGIC ---
+    const storyModal = document.getElementById('story-modal');
+    const storyDisplay = document.getElementById('story-display');
+    const storyProgress = document.getElementById('story-progress');
+    const closeStory = document.getElementById('close-story');
+    
+    let storyTimer;
+    const stories = {
+        process: { img: 'assets/images/teaser.png', text: 'Crafting memories with care... ✂️✨' },
+        packing: { img: 'assets/images/blindbox.png', text: 'Another bundle of love ready to ship! 📦💖' },
+        reviews: { img: 'assets/images/scrapbook.png', text: 'Happy hearts make us happy! 😍' },
+        new: { img: 'assets/images/logo.png', text: 'Something fresh is brewing... ☕️' }
+    };
+
+    document.querySelectorAll('.highlight-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const key = item.getAttribute('data-story');
+            const data = stories[key];
+            
+            storyDisplay.innerHTML = `<img src="${data.img}" class="story-image-full"><div class="story-overlay-text"><h3>${data.text}</h3></div>`;
+            storyModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            
+            // Animate Progress Bar
+            let width = 0;
+            clearInterval(storyTimer);
+            storyTimer = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(storyTimer);
+                    storyModal.classList.remove('show');
+                    document.body.style.overflow = '';
+                } else {
+                    width++;
+                    storyProgress.style.width = width + '%';
+                }
+            }, 50); // 5 seconds total
+            
+            notifyTelegram("Watch Story", `Story: ${key}`);
+        });
+    });
+
+    if (closeStory) {
+        closeStory.addEventListener('click', () => {
+            clearInterval(storyTimer);
+            storyModal.classList.remove('show');
+            document.body.style.overflow = '';
+        });
+    }
+
     // Helper to close modals
     const closeModal = () => {
         document.querySelectorAll('.modal').forEach(m => m.classList.remove('show'));

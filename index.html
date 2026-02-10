@@ -147,6 +147,26 @@
                 <p>From digital printing to handcrafted treasures.</p>
             </div>
 
+            <!-- Studio Highlights (Instagram Style) -->
+            <div class="highlights-row animate-on-scroll fade-up">
+                <div class="highlight-item" data-story="process">
+                    <div class="highlight-ring"><img src="assets/images/teaser.png" alt="Process"></div>
+                    <span>How it's Made</span>
+                </div>
+                <div class="highlight-item" data-story="packing">
+                    <div class="highlight-ring"><img src="assets/images/blindbox.png" alt="Packing"></div>
+                    <span>Packing</span>
+                </div>
+                <div class="highlight-item" data-story="reviews">
+                    <div class="highlight-ring"><img src="assets/images/scrapbook.png" alt="Reviews"></div>
+                    <span>Reviews</span>
+                </div>
+                <div class="highlight-item" data-story="new">
+                    <div class="highlight-ring"><img src="assets/images/logo.png" alt="New"></div>
+                    <span>New Drops</span>
+                </div>
+            </div>
+
             <!-- Search Bar -->
             <div class="search-container animate-on-scroll fade-up">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
@@ -825,6 +845,17 @@
 
     <!-- Flying Animation Placeholder -->
     <div id="flying-image" class="flying-image"></div>
+
+    <!-- Story Modal -->
+    <div id="story-modal" class="modal story-modal">
+        <div class="story-content">
+            <button class="close-modal story-close" id="close-story">&times;</button>
+            <div class="story-progress-bar"><div id="story-progress"></div></div>
+            <div id="story-display">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>
