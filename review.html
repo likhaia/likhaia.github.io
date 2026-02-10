@@ -12,8 +12,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Confetti Library -->
+    <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
     <style>
         :root {
@@ -46,7 +47,7 @@
             box-shadow: 0 20px 50px rgba(49, 10, 93, 0.1);
             text-align: center;
             position: relative;
-            overflow: hidden;
+            z-index: 10;
         }
 
         .logo-small { height: 60px; margin-bottom: 20px; }
@@ -70,9 +71,8 @@
         }
 
         .star.active { color: #FFD700; transform: scale(1.2); }
-        .star:hover { transform: scale(1.3); }
 
-        /* Dynamic Feedback Sections */
+        /* Form Styling */
         .feedback-area { display: none; animation: slideUp 0.5s ease forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -94,7 +94,6 @@
         .input-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; }
         .input-group input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; }
 
-        /* Permission Checkbox */
         .permission-box {
             display: flex;
             align-items: flex-start;
@@ -127,7 +126,7 @@
             transition: var(--transition);
         }
 
-        .submit-btn:hover { background: var(--accent-pink); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(214, 51, 132, 0.3); }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
         /* Success State */
         .success-state { display: none; text-align: center; }
@@ -141,6 +140,74 @@
             font-weight: 700;
             margin: 20px 0;
             color: var(--primary-color);
+        }
+
+        /* --- TESTIMONIAL CARD TEMPLATE (HIDDEN) --- */
+        #review-template {
+            position: absolute;
+            left: -9999px; /* Hide from user but keep in DOM */
+            top: 0;
+            width: 1080px;
+            height: 1080px;
+            background: var(--bg-gradient);
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .temp-card {
+            background: white;
+            width: 100%;
+            height: 100%;
+            border-radius: 60px;
+            padding: 80px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .temp-logo { height: 120px; margin-bottom: 40px; }
+        
+        .temp-stars { color: #FFD700; font-size: 80px; margin-bottom: 40px; }
+        
+        .temp-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 54px;
+            line-height: 1.3;
+            color: var(--primary-color);
+            margin-bottom: 60px;
+            font-style: italic;
+            position: relative;
+        }
+
+        .temp-quote::before, .temp-quote::after {
+            content: '"';
+            font-size: 120px;
+            color: var(--accent-pink);
+            opacity: 0.3;
+            position: absolute;
+        }
+        .temp-quote::before { top: -60px; left: -40px; }
+        .temp-quote::after { bottom: -120px; right: -20px; }
+
+        .temp-name {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent-pink);
+            margin-top: auto;
+        }
+
+        .temp-tag {
+            font-size: 28px;
+            color: #888;
+            margin-top: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -175,7 +242,7 @@
 
                 <label class="permission-box">
                     <input type="checkbox" id="allow-post" checked>
-                    <span>I allow Likhaia Works to feature my review on social media and the website to inspire other customers! 📸✨</span>
+                    <span>I allow Likhaia Works to feature my review on social media and the website! 📸✨</span>
                 </label>
 
                 <button class="submit-btn" id="submit-review">
@@ -186,13 +253,23 @@
 
         <div id="success-view" class="success-state">
             <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
-            <h2>Thank You!</h2>
-            <p>Your feedback means the world to us.</p>
-            <p>As a token of our love, here is a discount for your next order:</p>
+            <h2>Success!</h2>
+            <p>Your review has been shared with the studio.</p>
+            <p>Here is your 10% OFF discount code:</p>
             <div class="coupon-code">LIKHAIAFAM10</div>
-            <p style="font-size: 0.8rem; color: #888;">Mention this code when you message us again!</p>
             <br>
             <a href="index.html" style="color: var(--accent-pink); font-weight: 600; text-decoration: none;">Back to Website</a>
+        </div>
+    </div>
+
+    <!-- HIDDEN PRE-STYLED TESTIMONIAL CARD FOR SOCIAL MEDIA -->
+    <div id="review-template">
+        <div class="temp-card">
+            <img src="assets/images/logo.png" class="temp-logo">
+            <div class="temp-stars" id="temp-stars-display"></div>
+            <p class="temp-quote" id="temp-quote-text"></p>
+            <p class="temp-name" id="temp-name-display"></p>
+            <p class="temp-tag">Verified Customer • LIKHAIAWORKS</p>
         </div>
     </div>
 
@@ -203,32 +280,20 @@
         const msgLabel = document.getElementById('msg-label');
         let currentRating = 0;
 
-        // Telegram Details (Reusing your Bot info)
         const TELEGRAM_TOKEN = "8161719576:AAH4qFIJg-XZqAbUol7zotQ9V-oIkXHvL2A";
         const TELEGRAM_CHAT_ID = "5543161340";
 
         stars.forEach(star => {
             star.addEventListener('click', () => {
-                currentRating = star.getAttribute('data-value');
-                
-                // Visual update
-                stars.forEach(s => {
-                    s.classList.toggle('active', s.getAttribute('data-value') <= currentRating);
-                });
-
-                // Content update based on rating
+                currentRating = parseInt(star.getAttribute('data-value'));
+                stars.forEach(s => s.classList.toggle('active', s.getAttribute('data-value') <= currentRating));
                 feedbackArea.style.display = 'block';
+                
                 if (currentRating >= 4) {
                     reactionText.innerText = "Yay! We're so happy you love it! 😍";
                     reactionText.style.color = "#d63384";
                     msgLabel.innerText = "What did you love most about it?";
-                    // Celebrate!
-                    confetti({
-                        particleCount: 150,
-                        spread: 70,
-                        origin: { y: 0.6 },
-                        colors: ['#310a5d', '#d63384', '#FFD700']
-                    });
+                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#310a5d', '#d63384', '#FFD700'] });
                 } else {
                     reactionText.innerText = "We want to make it better for you. 🥺";
                     reactionText.style.color = "#310a5d";
@@ -238,47 +303,62 @@
         });
 
         document.getElementById('submit-review').addEventListener('click', async () => {
-            const name = document.getElementById('customer-name').value || "Anonymous";
+            const name = document.getElementById('customer-name').value || "Happy Customer";
             const message = document.getElementById('customer-message').value;
-            const allowPost = document.getElementById('allow-post').checked ? "YES ✅" : "No ❌";
+            const allowPost = document.getElementById('allow-post').checked;
+            const submitBtn = document.getElementById('submit-review');
 
             if (!message) { alert("Please type a short message!"); return; }
 
-            // 1. Prepare Telegram Message
-            const tgMessage = `⭐ NEW CUSTOMER REVIEW!
--------------------------
-Rating: ${currentRating} / 5 Stars
-Customer: ${name}
-Message: ${message}
-Allow Posting: ${allowPost}
--------------------------
-Studio: LIKHAIAWORKS`;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Generating Card...';
 
-            // 2. Prepare Messenger Link (for fallback/direct chat)
-            const msgrMessage = `Hi Likhaia! I just rated you ${currentRating} stars on your website. My review: "${message}". ${allowPost === 'YES ✅' ? 'You can post this!' : ''}`;
-            const msgrLink = `https://m.me/1016930224830241?text=${encodeURIComponent(msgrMessage)}`;
+            // 1. Prepare the Review Card Image
+            document.getElementById('temp-quote-text').innerText = message;
+            document.getElementById('temp-name-display').innerText = "- " + name;
+            
+            let starString = "";
+            for(let i=0; i<currentRating; i++) starString += "★";
+            document.getElementById('temp-stars-display').innerText = starString;
 
             try {
-                // Send to Telegram
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: tgMessage })
+                // Wait for template to render
+                const canvas = await html2canvas(document.getElementById('review-template'), {
+                    useCORS: true,
+                    scale: 1, // Full 1080px quality
+                    backgroundColor: null
                 });
 
-                // Show Success View
+                const blob = await new Promise(resolve => canvas.toBlob(blob => resolve(blob), 'image/jpeg', 0.9));
+
+                // 2. Send Image to Telegram
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('photo', blob, 'review-card.jpg');
+                formData.append('caption', `⭐ NEW REVIEW CARD\nRating: ${currentRating}/5\nFrom: ${name}\nPost Allowed: ${allowPost ? 'YES ✅' : 'No ❌'}`);
+
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // 3. Show Success View
                 document.getElementById('review-step-1').style.display = 'none';
                 document.getElementById('success-view').style.display = 'block';
 
-                // Automatically open Messenger after a short delay so they can say hi
+                // Optional Messenger redirect
+                const msgrMessage = `Hi Likhaia! I just rated you ${currentRating} stars. Review: "${message}"`;
+                const msgrLink = `https://m.me/1016930224830241?text=${encodeURIComponent(msgrMessage)}`;
+                
                 setTimeout(() => {
-                    if(confirm("Would you like to send this review directly to our Messenger too?")) {
+                    if(confirm("Review saved! Would you like to say hi on Messenger too?")) {
                         window.open(msgrLink, '_blank');
                     }
-                }, 2000);
+                }, 1500);
 
             } catch (err) {
-                alert("Oops! Something went wrong. Please try again.");
+                console.error(err);
+                alert("Something went wrong, but your text was saved!");
             }
         });
     </script>
