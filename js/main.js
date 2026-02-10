@@ -246,6 +246,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
         vinyl_decals: [
             { url: 'assets/images/available-soon.png', id: 'LW-VD-01' }
+        ],
+        templates: [
+            { url: 'assets/images/available-soon.png', id: 'LW-CT-01' },
+            { url: 'assets/images/available-soon.png', id: 'LW-CT-02' }
         ]
     };
 
@@ -311,7 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Polaroid/Instax Prints': '10 pcs for ₱49 (+₱10 for colored frame). Include border choice.',
         'Blind Box': 'Includes 10 polaroids, 1 message with picture, and 1 keychain. Mention theme!',
         'Custom Gift Set': 'Box with mini flowers, etc. Send your inspo and choice of items!',
-        'Vinyl Decals (Moto/Car)': 'Include: Design/Text and Vinyl Color (Matte/Glossy/Holo). Max A4 size.'
+        'Vinyl Decals (Moto/Car)': 'Include: Design/Text and Vinyl Color (Matte/Glossy/Holo). Max A4 size.',
+        'Canva Craft Templates': 'Includes digital link to our Canva template. Please specify which template you want!'
     };
 
     const productVariations = {
@@ -321,7 +326,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Polaroid/Instax Prints': ['Regular White', 'Colorful Frame (+₱10)', 'Custom Design'],
         'Vinyl Decals (Moto/Car)': ['Matte Black/White', 'Glossy', 'Holographic'],
         'Customized Chibi Stickers': ['Matte', 'Glossy', 'Glitter/Holo'],
-        'Laminated Photo Keychain': ['Single Sided', 'Back-to-back']
+        'Laminated Photo Keychain': ['Single Sided', 'Back-to-back'],
+        'Canva Craft Templates': ['Mini Scrapbook', 'Gift Box', 'Photostrip', 'All Access Bundle']
     };
 
     const openOrderModal = (product, code = '') => {
@@ -447,6 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Logic for recommendation
         if (quizChoices[2] === "music") recommendedId = "keychains";
         else if (quizChoices[2] === "sentimental") recommendedId = "prints";
+        else if (quizChoices[0] === "self") recommendedId = "templates";
         else if (quizChoices[0] === "partner") recommendedId = "prints";
         else recommendedId = "gifts";
 
