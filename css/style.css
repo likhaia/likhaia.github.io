@@ -361,6 +361,7 @@ img { max-width: 100%; display: block; border-radius: var(--border-radius); }
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .hero-background {
