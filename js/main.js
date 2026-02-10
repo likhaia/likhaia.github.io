@@ -7,9 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     };
 
-    // Time-Based Greeting
+    // Time-Based Greeting & Status
     function updateGreeting() {
         const greetingEl = document.getElementById('greeting');
+        const statusText = document.getElementById('status-text');
+        const statusDot = document.querySelector('.status-dot');
         if (!greetingEl) return;
 
         const hour = new Date().getHours();
@@ -20,6 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
         else welcomeText = "Good Evening! ✨ " + welcomeText;
 
         greetingEl.innerText = welcomeText;
+
+        // Update Shop Status
+        if (statusText && statusDot) {
+            if (hour >= 8 && hour < 20) {
+                statusText.innerText = "Accepting Orders";
+                statusDot.style.backgroundColor = "#4CAF50"; // Green
+            } else {
+                statusText.innerText = "Processing Inquiries";
+                statusDot.style.backgroundColor = "#FFC107"; // Amber
+            }
+        }
     }
 
     if (document.readyState === 'complete') {
@@ -527,51 +540,135 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- STUDIO HIGHLIGHTS (STORY) LOGIC ---
     const storyModal = document.getElementById('story-modal');
     const storyDisplay = document.getElementById('story-display');
-    const storyProgress = document.getElementById('story-progress');
+    const storyProgressContainer = document.getElementById('story-progress-container');
     const closeStory = document.getElementById('close-story');
+    const prevZone = document.getElementById('story-prev');
+    const nextZone = document.getElementById('story-next');
     
     let storyTimer;
+    let currentStoryKey = '';
+    let currentSegmentIndex = 0;
+    let segmentProgress = 0;
+
+    // Data Structure: Now supports arrays of images/text
     const stories = {
-        process: { img: 'assets/images/teaser.png', text: 'Crafting memories with care... ✂️✨' },
-        packing: { img: 'assets/images/blindbox.png', text: 'Another bundle of love ready to ship! 📦💖' },
-        reviews: { img: 'assets/images/scrapbook.png', text: 'Happy hearts make us happy! 😍' },
-        new: { img: 'assets/images/logo.png', text: 'Something fresh is brewing... ☕️' }
+        process: [
+            { img: 'assets/images/teaser.png', text: 'Step 1: Designing the layout ✍️' },
+            { img: 'assets/images/scrapbook.png', text: 'Step 2: Selecting materials ✂️' },
+            { img: 'assets/images/available-soon.png', text: 'Step 3: Hand-binding with love 💖' }
+        ],
+        packing: [
+            { img: 'assets/images/blindbox.png', text: 'Packing a special order! 📦' },
+            { img: 'assets/images/gift-set.png', text: 'Signature pink ribbons 🎀' }
+        ],
+        reviews: [
+            { img: 'assets/images/scrapbook.png', text: '"It turned out so beautiful!" - Maria 😍' },
+            { img: 'assets/images/acrylic-keychain-strip.png', text: '"The quality is amazing, worth the wait!" - James ✨' },
+            { img: 'assets/images/available-soon.png', text: 'Customer Review 3' },
+            { img: 'assets/images/available-soon.png', text: 'Customer Review 4' },
+            { img: 'assets/images/available-soon.png', text: 'Customer Review 5' },
+            { img: 'assets/images/available-soon.png', text: 'Customer Review 6' },
+            { img: 'assets/images/available-soon.png', text: 'Customer Review 7' },
+            { img: 'assets/images/available-soon.png', text: 'Customer Review 8' },
+            { img: 'assets/images/available-soon.png', text: 'Customer Review 9' },
+            { img: 'assets/images/available-soon.png', text: 'Customer Review 10' }
+        ],
+        new: [
+            { img: 'assets/images/logo.png', text: 'New collections coming soon! ☕️' }
+        ]
+    };
+
+    const renderStorySegment = () => {
+        const data = stories[currentStoryKey][currentSegmentIndex];
+        
+        storyDisplay.innerHTML = `
+            <div class="story-bg-blur" style="background-image: url('${data.img}')"></div>
+            <div class="story-header">
+                <img src="assets/images/logo.png" class="story-avatar">
+                <span class="story-username">likhaiaworks</span>
+            </div>
+            <img src="${data.img}" class="story-image-full">
+            <div class="story-overlay-text">
+                <h3>${data.text}</h3>
+            </div>
+        `;
+
+        // Update Progress Segments UI
+        const segments = document.querySelectorAll('.story-progress-segment');
+        segments.forEach((seg, idx) => {
+            seg.classList.toggle('seen', idx < currentSegmentIndex);
+            seg.querySelector('.story-progress-fill').style.width = idx === currentSegmentIndex ? segmentProgress + '%' : (idx < currentSegmentIndex ? '100%' : '0%');
+        });
+    };
+
+    const startStoryPlayback = () => {
+        segmentProgress = 0;
+        clearInterval(storyTimer);
+        storyTimer = setInterval(() => {
+            if (segmentProgress >= 100) {
+                nextSegment();
+            } else {
+                segmentProgress += 2; // Speed of playback
+                const activeFill = document.querySelectorAll('.story-progress-fill')[currentSegmentIndex];
+                if (activeFill) activeFill.style.width = segmentProgress + '%';
+            }
+        }, 60); // Approx 3 seconds per segment
+    };
+
+    const nextSegment = () => {
+        if (currentSegmentIndex < stories[currentStoryKey].length - 1) {
+            currentSegmentIndex++;
+            segmentProgress = 0;
+            renderStorySegment();
+        } else {
+            closeStoryModal();
+        }
+    };
+
+    const prevSegment = () => {
+        if (currentSegmentIndex > 0) {
+            currentSegmentIndex--;
+            segmentProgress = 0;
+            renderStorySegment();
+        } else {
+            // Restart current segment if it's the first one
+            segmentProgress = 0;
+            renderStorySegment();
+        }
+    };
+
+    const closeStoryModal = () => {
+        clearInterval(storyTimer);
+        storyModal.classList.remove('show');
+        document.body.style.overflow = '';
     };
 
     document.querySelectorAll('.highlight-item').forEach(item => {
         item.addEventListener('click', () => {
-            const key = item.getAttribute('data-story');
-            const data = stories[key];
+            currentStoryKey = item.getAttribute('data-story');
+            currentSegmentIndex = 0;
+            segmentProgress = 0;
             
-            storyDisplay.innerHTML = `<img src="${data.img}" class="story-image-full"><div class="story-overlay-text"><h3>${data.text}</h3></div>`;
+            // Create Progress Segments
+            storyProgressContainer.innerHTML = '';
+            stories[currentStoryKey].forEach(() => {
+                const seg = document.createElement('div');
+                seg.className = 'story-progress-segment';
+                seg.innerHTML = '<div class="story-progress-fill"></div>';
+                storyProgressContainer.appendChild(seg);
+            });
+
+            renderStorySegment();
+            startStoryPlayback();
             storyModal.classList.add('show');
             document.body.style.overflow = 'hidden';
-            
-            // Animate Progress Bar
-            let width = 0;
-            clearInterval(storyTimer);
-            storyTimer = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(storyTimer);
-                    storyModal.classList.remove('show');
-                    document.body.style.overflow = '';
-                } else {
-                    width++;
-                    storyProgress.style.width = width + '%';
-                }
-            }, 50); // 5 seconds total
-            
-            notifyTelegram("Watch Story", `Story: ${key}`);
+            notifyTelegram("Watch Story", `Story: ${currentStoryKey}`);
         });
     });
 
-    if (closeStory) {
-        closeStory.addEventListener('click', () => {
-            clearInterval(storyTimer);
-            storyModal.classList.remove('show');
-            document.body.style.overflow = '';
-        });
-    }
+    if (closeStory) closeStory.addEventListener('click', closeStoryModal);
+    if (nextZone) nextZone.addEventListener('click', (e) => { e.stopPropagation(); nextSegment(); startStoryPlayback(); });
+    if (prevZone) prevZone.addEventListener('click', (e) => { e.stopPropagation(); prevSegment(); startStoryPlayback(); });
 
     // Helper to close modals
     const closeModal = () => {

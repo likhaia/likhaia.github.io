@@ -62,7 +62,7 @@
             <!-- Shop Status Indicator -->
             <div class="shop-status">
                 <span class="status-dot"></span>
-                <span class="status-text">Open for Orders</span>
+                <span id="status-text" class="status-text">Open for Orders</span>
             </div>
 
             <button class="mobile-menu-btn" aria-label="Toggle navigation">
@@ -850,9 +850,18 @@
     <div id="story-modal" class="modal story-modal">
         <div class="story-content">
             <button class="close-modal story-close" id="close-story">&times;</button>
-            <div class="story-progress-bar"><div id="story-progress"></div></div>
+            <div id="story-progress-container" class="story-progress-bar-container">
+                <!-- Progress segments injected via JS -->
+            </div>
+            
             <div id="story-display">
                 <!-- Content injected via JS -->
+            </div>
+
+            <!-- Tap Navigation Zones -->
+            <div class="story-nav-zones">
+                <div id="story-prev" class="nav-zone"></div>
+                <div id="story-next" class="nav-zone"></div>
             </div>
         </div>
     </div>
