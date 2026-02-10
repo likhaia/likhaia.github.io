@@ -203,38 +203,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Data for Sample Images (Updated for new products)
     const sampleData = {
         scrapbook: [
-            { url: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80', id: 'LW-MS-01' },
-            { url: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=600&q=80', id: 'LW-MS-02' },
-            { url: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=600&q=80', id: 'LW-MS-03' },
-            { url: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=600&q=80', id: 'LW-MS-04' }
+            { url: 'assets/images/available-soon.png', id: 'LW-MS-01' },
+            { url: 'assets/images/available-soon.png', id: 'LW-MS-02' }
         ],
         strip_keychain: [
-            { url: 'https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?auto=format&fit=crop&w=600&q=80', id: 'LW-PK-01' },
-            { url: 'https://images.unsplash.com/photo-1604163546580-c5332616f97c?auto=format&fit=crop&w=600&q=80', id: 'LW-PK-02' }
+            { url: 'assets/images/available-soon.png', id: 'LW-PK-01' },
+            { url: 'assets/images/available-soon.png', id: 'LW-PK-02' }
         ],
         photo_keychain: [
-            { url: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80', id: 'LW-SK-01' },
-            { url: 'https://images.unsplash.com/photo-1620300762319-53e74d92ebc9?auto=format&fit=crop&w=600&q=80', id: 'LW-SK-02' }
+            { url: 'assets/images/available-soon.png', id: 'LW-SK-01' },
+            { url: 'assets/images/available-soon.png', id: 'LW-SK-02' }
         ],
         polaroids: [
-            { url: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80', id: 'LW-PP-01' },
-            { url: 'https://images.unsplash.com/photo-1593453896434-d2e825a0a38b?auto=format&fit=crop&w=600&q=80', id: 'LW-PP-02' }
+            { url: 'assets/images/available-soon.png', id: 'LW-PP-01' },
+            { url: 'assets/images/available-soon.png', id: 'LW-PP-02' }
         ],
         blind_box: [
-            { url: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80', id: 'LW-BB-01' }
+            { url: 'assets/images/available-soon.png', id: 'LW-BB-01' }
         ],
         gifts: [
-            { url: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80', id: 'LW-GB-01' },
-            { url: 'https://images.unsplash.com/photo-1607344645830-47b6ad6c770d?auto=format&fit=crop&w=600&q=80', id: 'LW-GB-02' }
+            { url: 'assets/images/available-soon.png', id: 'LW-GB-01' },
+            { url: 'assets/images/available-soon.png', id: 'LW-GB-02' }
         ],
         chibi_stickers: [
-            { url: 'https://images.unsplash.com/photo-1620300762319-53e74d92ebc9?auto=format&fit=crop&w=600&q=80', id: 'LW-CS-01' }
+            { url: 'assets/images/available-soon.png', id: 'LW-CS-01' }
         ],
         lam_keychain: [
-            { url: 'https://images.unsplash.com/photo-1621600411688-4be93cd68504?auto=format&fit=crop&w=600&q=80', id: 'LW-LK-01' }
+            { url: 'assets/images/available-soon.png', id: 'LW-LK-01' }
         ],
         vinyl_decals: [
-            { url: 'https://images.unsplash.com/photo-1626114271030-4419757048d0?auto=format&fit=crop&w=600&q=80', id: 'LW-VD-01' }
+            { url: 'assets/images/available-soon.png', id: 'LW-VD-01' }
         ]
     };
 
@@ -303,20 +301,58 @@ document.addEventListener('DOMContentLoaded', () => {
         'Vinyl Decals (Moto/Car)': 'Include: Design/Text and Vinyl Color (Matte/Glossy/Holo). Max A4 size.'
     };
 
+    const productVariations = {
+        'Mini Scrapbook (A6)': ['Valentine Edition', 'Anniversary', 'Birthday'],
+        'Acrylic Keychain Strip': ['Regular Design', 'Colorful Frame (+₱5)'],
+        'Spotify/Photo Keychain': ['Spotify Code', 'Custom Chibi', 'Full Page Photo (+₱5)'],
+        'Polaroid/Instax Prints': ['Regular White', 'Colorful Frame (+₱10)', 'Custom Design'],
+        'Vinyl Decals (Moto/Car)': ['Matte Black/White', 'Glossy', 'Holographic'],
+        'Customized Chibi Stickers': ['Matte', 'Glossy', 'Glitter/Holo'],
+        'Laminated Photo Keychain': ['Single Sided', 'Back-to-back']
+    };
+
     const openOrderModal = (product, code = '') => {
         productNameInput.value = product;
         orderModalTitle.innerText = 'Order: ' + product;
         orderCode.value = code;
         orderGuide.innerText = productGuides[product] || 'Please include size, color, and design notes.';
+        
+        // Handle Video Button inside Modal
+        const modalVideoBtn = document.getElementById('modal-watch-video');
+        const originalCard = Array.from(document.querySelectorAll('.card')).find(c => c.querySelector('h3').innerText === product);
+        const videoBtnInCard = originalCard ? originalCard.querySelector('.video-btn') : null;
+        
+        if (videoBtnInCard) {
+            modalVideoBtn.style.display = 'flex';
+            modalVideoBtn.onclick = () => {
+                window.open(videoBtnInCard.getAttribute('data-video-link'), '_blank');
+            };
+        } else {
+            modalVideoBtn.style.display = 'none';
+        }
+
         orderModal.classList.add('show');
         document.body.style.overflow = 'hidden';
 
         // Notify Telegram
-        notifyTelegram("Click Order Now", `Product: ${product} ${code ? '(Ref: ' + code + ')' : ''}`);
+        notifyTelegram("Form Opened", `Product: ${product} ${code ? '(Ref: ' + code + ')' : ''}`);
     };
 
     document.querySelectorAll('.order-btn').forEach(btn => {
-        btn.addEventListener('click', () => openOrderModal(btn.getAttribute('data-product')));
+        btn.addEventListener('click', () => {
+            const product = btn.getAttribute('data-product');
+            const card = btn.closest('.card');
+            const viewSampleBtn = card.querySelector('.view-samples-btn');
+            
+            // Instead of opening form, open the Samples Gallery first
+            if (viewSampleBtn) {
+                viewSampleBtn.click();
+                notifyTelegram("Order Started", `User sent to Samples for: ${product}`);
+            } else {
+                // Fallback for items with no samples
+                openOrderModal(product);
+            }
+        });
     });
 
     if (orderRush) {
@@ -355,10 +391,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function generateMessage() {
         const details = document.getElementById('order-details').value;
+        const product = productNameInput.value;
+
         if(!details) { alert('Please enter customization details!'); return null; }
         
         const isRush = orderRush.checked ? 'YES' : 'No';
-        return `ORDER INQUIRY\n-------------------------\nProduct: ${productNameInput.value}\nRef Code: ${orderCode.value || 'None'}\nQuantity: ${document.getElementById('order-qty').value}\nDesired Delivery: ${document.getElementById('order-date').value || 'Not specified'}\nRush Order: ${isRush}\nCustomization Details: ${details}\n-------------------------\nSent from LIKHAIAWORKS Website`;
+        return `ORDER INQUIRY
+-------------------------
+Product: ${product}
+Reference Code: ${orderCode.value || 'None'}
+Quantity: ${document.getElementById('order-qty').value}
+Desired Delivery: ${document.getElementById('order-date').value || 'Not specified'}
+Rush Order: ${isRush}
+Customization Details: ${details}
+-------------------------
+Sent from LIKHAIAWORKS Website`;
     }
 
     // Share Logic

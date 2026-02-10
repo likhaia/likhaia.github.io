@@ -124,7 +124,7 @@
     <section id="about" class="section">
         <div class="container about-wrapper">
             <div class="about-image animate-on-scroll fade-up">
-                <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80" alt="Meet the Maker">
+                <img src="assets/images/teaser.png" alt="Meet the Maker">
             </div>
             <div class="about-text animate-on-scroll fade-up">
                 <span class="sub-title">The Artist Behind the Craft</span>
@@ -161,11 +161,6 @@
                 <button class="filter-btn" data-filter="stickers">Stickers</button>
                 <button class="filter-btn" data-filter="vinyl">Vinyl Decals</button>
                 <button class="filter-btn" data-filter="gifts">Gift Sets</button>
-            </div>
-
-            <!-- Mobile Swipe Hint -->
-            <div class="mobile-swipe-hint">
-                <i class="fa-solid fa-hand-pointer"></i> Swipe to browse
             </div>
 
             <div class="grid-3 product-grid">
@@ -233,7 +228,7 @@
                 <!-- Product 4: Polaroid Prints -->
                 <article class="card animate-on-scroll fade-up" data-category="prints">
                     <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80" alt="Polaroid Prints">
+                        <img src="assets/images/available-soon.png" alt="Polaroid Prints">
                         <div class="card-overlay"><i class="fa-solid fa-images"></i></div>
                     </div>
                     <div class="card-content">
@@ -291,7 +286,7 @@
                 <!-- Product 7: Vinyl Decals -->
                 <article class="card animate-on-scroll fade-up" data-category="vinyl">
                     <div class="card-image">
-                        <img src="assets/images/customize.png" alt="Vinyl Decals">
+                        <img src="assets/images/available-soon.png" alt="Vinyl Decals">
                         <div class="card-overlay"><i class="fa-solid fa-motorcycle"></i></div>
                     </div>
                     <div class="card-content">
@@ -310,7 +305,7 @@
                 <!-- Product 8: Chibi Stickers -->
                 <article class="card animate-on-scroll fade-up" data-category="stickers">
                     <div class="card-image">
-                        <img src="assets/images/chibi.png" alt="Chibi Stickers">
+                        <img src="assets/images/available-soon.png" alt="Chibi Stickers">
                         <div class="card-overlay"><i class="fa-solid fa-face-smile-wink"></i></div>
                     </div>
                     <div class="card-content">
@@ -329,7 +324,7 @@
                 <!-- Product 9: Laminated Keychain -->
                 <article class="card animate-on-scroll fade-up" data-category="keychains">
                     <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1621600411688-4be93cd68504?auto=format&fit=crop&w=600&q=80" alt="Laminated Keychain">
+                        <img src="assets/images/available-soon.png" alt="Laminated Keychain">
                         <div class="card-overlay"><i class="fa-solid fa-key"></i></div>
                     </div>
                     <div class="card-content">
@@ -354,7 +349,7 @@
                 <div class="upcoming-grid">
                     <article class="card animate-on-scroll fade-up card-soon">
                         <div class="card-image">
-                            <img src="assets/images/teaser.png" alt="Coming Soon">
+                            <img src="assets/images/available-soon.png" alt="Coming Soon">
                             <div class="card-overlay">
                                 <i class="fa-solid fa-hourglass-start"></i>
                             </div>
@@ -408,12 +403,12 @@
                 <p>Get a daily dose of crafts and behind-the-scenes content. <a href="https://www.facebook.com/profile.php?id=61586971808917" target="_blank" style="color:var(--accent-pink); font-weight: 600;">@likhaiaworks</a></p>
             </div>
             <div class="insta-grid animate-on-scroll fade-up">
-                <div class="insta-item"><img src="https://images.unsplash.com/photo-1620300762319-53e74d92ebc9?auto=format&fit=crop&w=300&q=80" alt="Insta 1"></div>
-                <div class="insta-item"><img src="https://images.unsplash.com/photo-1617396900799-f4ec2b43c7ae?auto=format&fit=crop&w=300&q=80" alt="Insta 2"></div>
-                <div class="insta-item"><img src="https://images.unsplash.com/photo-1519337265831-281ec6cc8514?auto=format&fit=crop&w=300&q=80" alt="Insta 3"></div>
-                <div class="insta-item"><img src="https://images.unsplash.com/photo-1607344645830-47b6ad6c770d?auto=format&fit=crop&w=300&q=80" alt="Insta 4"></div>
-                <div class="insta-item"><img src="https://images.unsplash.com/photo-1621600411688-4be93cd68504?auto=format&fit=crop&w=300&q=80" alt="Insta 5"></div>
-                <div class="insta-item"><img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=300&q=80" alt="Insta 6"></div>
+                <div class="insta-item"><img src="assets/images/available-soon.png" alt="Insta 1"></div>
+                <div class="insta-item"><img src="assets/images/available-soon.png" alt="Insta 2"></div>
+                <div class="insta-item"><img src="assets/images/available-soon.png" alt="Insta 3"></div>
+                <div class="insta-item"><img src="assets/images/available-soon.png" alt="Insta 4"></div>
+                <div class="insta-item"><img src="assets/images/available-soon.png" alt="Insta 5"></div>
+                <div class="insta-item"><img src="assets/images/available-soon.png" alt="Insta 6"></div>
             </div>
         </div>
     </section>
@@ -630,12 +625,19 @@
         <div class="modal-content">
             <button class="close-modal" id="close-order-modal" aria-label="Close modal">&times;</button>
             <h3 id="order-modal-title">Customize Your Order</h3>
+            
+            <!-- Quick Links inside Modal -->
+            <div class="modal-quick-links">
+                <button id="modal-watch-video" class="action-pill" style="display:none;"><i class="fa-solid fa-play"></i> Watch Video</button>
+            </div>
+
             <form id="order-form" class="order-form">
                 <input type="hidden" id="product-name">
                 <div class="form-group">
                     <label for="order-code">Reference Code (Optional)</label>
                     <input type="text" id="order-code" placeholder="e.g. LW-ST-01">
                 </div>
+                
                 <div class="form-group">
                     <label for="order-qty">Quantity</label>
                     <input type="number" id="order-qty" min="1" value="1" required>
