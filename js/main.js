@@ -619,7 +619,13 @@ Sent from LIKHAIAWORKS Website`;
 
     if (player && header) {
         // 1. Toggle Logic
-        const toggle = () => player.classList.toggle('is-minimized');
+        const toggle = () => {
+            player.classList.toggle('is-minimized');
+            // When minimizing, force it back to the left side
+            if (player.classList.contains('is-minimized')) {
+                player.style.left = '20px';
+            }
+        };
         minBtn.onclick = (e) => { e.stopPropagation(); toggle(); };
         miniIcon.onclick = toggle;
 
@@ -640,8 +646,6 @@ Sent from LIKHAIAWORKS Website`;
             initialTop = player.offsetTop;
             
             player.style.transition = 'none';
-            player.style.bottom = 'auto'; // Break CSS anchor
-            player.style.right = 'auto';  // Break CSS anchor
         };
 
         const whileDragging = (e) => {
@@ -652,13 +656,26 @@ Sent from LIKHAIAWORKS Website`;
             const dx = clientX - startX;
             const dy = clientY - startY;
             
+            // Allow free dragging while active
             player.style.left = (initialLeft + dx) + 'px';
             player.style.top = (initialTop + dy) + 'px';
+            player.style.bottom = 'auto';
+            player.style.right = 'auto';
         };
 
         const stopDragging = () => {
+            if (!isDragging) return;
             isDragging = false;
-            player.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            
+            // Snap to Left Logic: If it's minimized, it MUST stay on the left.
+            // If it's the full player, we allow them to move it, 
+            // but we'll add a smooth transition back if they minimize later.
+            if (player.classList.contains('is-minimized')) {
+                player.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                player.style.left = '20px';
+            } else {
+                player.style.transition = 'all 0.3s ease';
+            }
         };
 
         header.onmousedown = startDragging;
