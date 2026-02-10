@@ -720,6 +720,14 @@ body.loaded .handwritten-signature::after {
     color: white !important;
     top: 25px !important;
     right: 25px !important;
+    z-index: 30 !important; /* Higher than navigation zones (15) and progress (20) */
+    background: rgba(0,0,0,0.2) !important;
+    width: 40px;
+    height: 40px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .story-image-full {
@@ -751,7 +759,7 @@ body.loaded .handwritten-signature::after {
     display: flex;
     align-items: center;
     gap: 10px;
-    z-index: 10;
+    z-index: 25; /* Above navigation zones */
 }
 
 .story-avatar {
