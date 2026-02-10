@@ -446,6 +446,61 @@ img { max-width: 100%; display: block; border-radius: var(--border-radius); }
     color: var(--primary-color);
 }
 
+/* Handwritten Signature Animation */
+.handwritten-signature {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-style: italic;
+    color: var(--primary-color);
+    position: relative;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.handwritten-signature::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--accent-pink);
+    border-radius: 10px;
+    transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+    transition-delay: 0.8s;
+}
+
+body.loaded .handwritten-signature::after {
+    width: 100%;
+}
+
+/* Spotify Player Style */
+.studio-player {
+    margin-top: 40px;
+    background: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #eee;
+}
+
+.player-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.player-title i {
+    color: #1DB954; /* Spotify Green */
+    font-size: 1.1rem;
+}
+
 /* Section Header */
 .section-header {
     text-align: center;
