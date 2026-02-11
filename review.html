@@ -259,12 +259,37 @@
             border: 3px solid rgba(255,255,255,0.2);
         }
 
-        /* Luxury VIP Card - Landscape */
         .vip-card-wrapper {
             width: 100%;
             max-width: 420px;
             margin: 20px auto;
             perspective: 1000px;
+            position: relative;
+        }
+
+        .btn-download-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fcf6ba;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-download-icon:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
 
         .vip-card {
@@ -337,49 +362,29 @@
         }
 
         .action-btns {
-            display: flex;
-            gap: 15px;
             width: 100%;
             max-width: 420px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .btn-claim {
-            flex: 1.5;
+            width: 100%;
             background: #0084FF;
             color: white;
             padding: 18px;
             border-radius: 20px;
             text-decoration: none;
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 20px rgba(0,132,255,0.2);
+            box-shadow: 0 10px 25px rgba(0,132,255,0.2);
         }
 
-        .btn-download {
-            flex: 1;
-            background: #f8f9fa;
-            color: var(--primary-color);
-            padding: 18px;
-            border-radius: 20px;
-            border: 1px solid #eee;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: 0.3s;
-        }
-
-        .btn-claim:hover { transform: scale(1.05); }
-        .btn-download:hover { background: white; border-color: var(--primary-color); }
+        .btn-claim:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,132,255,0.3); }
 
         /* --- TESTIMONIAL CARD TEMPLATE (HIDDEN) --- */
         #review-template {
@@ -565,6 +570,9 @@
                     <div class="reward-badge" id="polaroid-count">🎁 +2 Bonus Polaroids</div>
                     
                     <div class="vip-card-wrapper" id="capture-zone">
+                        <button class="btn-download-icon" onclick="downloadVIPCard()" title="Download VIP Card">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
                         <div class="vip-card" id="downloadable-vip-card">
                             <div class="card-chip"></div>
                             <div class="card-top">
@@ -578,15 +586,12 @@
                         </div>
                     </div>
 
-                    <p style="font-size: 0.75rem; color: #888; margin-top: 15px; font-weight: 500;">Please save your card and claim your prize! ✨</p>
+                    <p style="font-size: 0.75rem; color: #888; margin-top: 15px; font-weight: 500;">Tap the icon above to save your card! 👆</p>
                     
                     <div class="action-btns">
                         <a href="#" id="claim-btn" target="_blank" class="btn-claim">
-                            <i class="fa-brands fa-facebook-messenger"></i> Claim Prize
+                            <i class="fa-brands fa-facebook-messenger"></i> Claim Bonus Polaroids
                         </a>
-                        <button class="btn-download" onclick="downloadVIPCard()">
-                            <i class="fa-solid fa-download"></i> Save Card
-                        </button>
                     </div>
                 </div>
 
@@ -781,9 +786,10 @@
 
         async function downloadVIPCard() {
             const card = document.getElementById('downloadable-vip-card');
-            const downloadBtn = document.querySelector('.btn-download');
+            const downloadBtn = document.querySelector('.btn-download-icon');
             
-            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            // Hide icon during capture
+            downloadBtn.style.display = 'none';
             
             try {
                 const canvas = await html2canvas(card, {
@@ -799,12 +805,12 @@
                 link.href = canvas.toDataURL('image/png');
                 link.click();
                 
-                downloadBtn.innerHTML = '<i class="fa-solid fa-check"></i> Saved!';
-                setTimeout(() => { downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i> Save Card'; }, 2000);
+                // Show icon back
+                downloadBtn.style.display = 'flex';
             } catch (err) {
                 console.error(err);
+                downloadBtn.style.display = 'flex';
                 alert("Could not save image. Try taking a screenshot!");
-                downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i> Save Card';
             }
         }
 
