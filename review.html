@@ -128,54 +128,6 @@
 
         .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* QR Code Modal */
-        .btn-qr-link {
-            background: none;
-            border: 1px solid #ddd;
-            color: #888;
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: var(--transition);
-        }
-        .btn-qr-link:hover { border-color: var(--primary-color); color: var(--primary-color); }
-
-        .qr-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(49, 10, 93, 0.9);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .qr-card {
-            background: white;
-            padding: 40px;
-            border-radius: 30px;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            animation: slideUp 0.4s ease;
-        }
-        .qr-img {
-            width: 200px;
-            height: 200px;
-            margin: 20px auto;
-            border: 10px solid #f9f9f9;
-            border-radius: 20px;
-        }
-        .close-qr {
-            margin-top: 20px;
-            color: #888;
-            cursor: pointer;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
         /* Success State */
         .success-state { display: none; text-align: center; }
         .success-icon { font-size: 4rem; color: #4CAF50; margin-bottom: 20px; }
@@ -275,8 +227,6 @@
                 <i class="fa-solid fa-star star" data-value="5"></i>
             </div>
 
-            <button id="show-qr-btn" class="btn-qr-link"><i class="fa-solid fa-qrcode"></i> Show Review QR Code</button>
-
             <div id="feedback-form" class="feedback-area">
                 <span id="reaction-text" class="reaction-msg"></span>
                 
@@ -319,21 +269,7 @@
             <div class="temp-stars" id="temp-stars-display"></div>
             <p class="temp-quote" id="temp-quote-text"></p>
             <p class="temp-name" id="temp-name-display"></p>
-            <p class="temp-tag">Verified Customer • LIKHAIAWORKS</p>
-        </div>
-    </div>
-
-    <!-- QR CODE MODAL -->
-    <div id="qr-modal" class="qr-modal">
-        <div class="qr-card">
-            <img src="assets/images/logo.png" style="height: 40px; margin-bottom: 15px;">
-            <h3>Scan to Rate</h3>
-            <p style="font-size: 0.85rem; color: #666;">Thank you for trusting Likhaia!</p>
-            <div id="qr-container">
-                <!-- QR will be injected here -->
-            </div>
-            <p id="qr-url-text" style="font-size: 0.7rem; color: #ccc; margin-top: 10px;"></p>
-            <div class="close-qr" onclick="document.getElementById('qr-modal').style.display='none'">Close</div>
+            <p class="temp-tag">Handmade with Love • LIKHAIAWORKS</p>
         </div>
     </div>
 
@@ -343,18 +279,6 @@
         const reactionText = document.getElementById('reaction-text');
         const msgLabel = document.getElementById('msg-label');
         let currentRating = 0;
-
-        // QR Logic
-        document.getElementById('show-qr-btn').onclick = () => {
-            const currentUrl = window.location.href;
-            const qrContainer = document.getElementById('qr-container');
-            const qrUrlText = document.getElementById('qr-url-text');
-            
-            // Using QR Server API (Reliable and Free)
-            qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(currentUrl)}" class="qr-img">`;
-            qrUrlText.innerText = currentUrl;
-            document.getElementById('qr-modal').style.display = 'flex';
-        };
 
         const TELEGRAM_TOKEN = "8161719576:AAH4qFIJg-XZqAbUol7zotQ9V-oIkXHvL2A";
         const TELEGRAM_CHAT_ID = "5543161340";
@@ -411,7 +335,7 @@
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('photo', blob, 'review-card.jpg');
-                formData.append('caption', `⭐ NEW REVIEW CARD\nRating: ${currentRating}/5\nFrom: ${name}\nPost Allowed: ${allowPost ? 'YES ✅' : 'No ❌'}`);
+                formData.append('caption', `⭐ NEW REVIEW\nRating: ${currentRating}/5\nFrom: ${name}\nPost Allowed: ${allowPost ? 'YES ✅' : 'No ❌'}`);
 
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, {
                     method: 'POST',
@@ -435,6 +359,8 @@
             } catch (err) {
                 console.error(err);
                 alert("Something went wrong, but your text was saved!");
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Share my Feedback";
             }
         });
     </script>
