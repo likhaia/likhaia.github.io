@@ -191,17 +191,50 @@
         .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
         /* Success State */
-        .success-state { display: none; text-align: center; }
-        .success-icon { font-size: 4rem; color: #4CAF50; margin-bottom: 20px; }
-        .coupon-code {
+        .success-state { display: none; text-align: center; animation: fadeIn 0.8s ease; }
+        
+        .magic-box-container {
+            margin: 30px auto;
+            position: relative;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .gift-box {
+            font-size: 5rem;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: inline-block;
-            background: #f0f0f0;
-            padding: 10px 20px;
-            border: 2px dashed #ccc;
-            border-radius: 8px;
+        }
+
+        .magic-box-container:hover .gift-box { transform: scale(1.1) rotate(5deg); }
+        
+        .magic-box-container.opened .gift-box { display: none; }
+
+        .reveal-content {
+            display: none;
+            background: #fff0f3;
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px dashed var(--accent-pink);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .vip-card {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
             font-weight: 700;
-            margin: 20px 0;
-            color: var(--primary-color);
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(49, 10, 93, 0.2);
         }
 
         /* --- TESTIMONIAL CARD TEMPLATE (HIDDEN) --- */
@@ -363,13 +396,22 @@
         </div>
 
         <div id="success-view" class="success-state">
-            <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
-            <h2>Success!</h2>
-            <p>Your review has been shared with the studio.</p>
-            <p>Here is your 10% OFF discount code:</p>
-            <div class="coupon-code">LIKHAIAFAM10</div>
+            <h2 id="success-title">Review Shared! ❤️</h2>
+            <p>Your "Likha" story means the world to our studio.</p>
+            
+            <div class="magic-box-container" id="magic-box" onclick="openSurprise()">
+                <div class="gift-box">🎁</div>
+                <div class="reveal-content" id="surprise-reveal">
+                    <p style="font-weight: 700; color: var(--accent-pink);">You're now part of the</p>
+                    <div class="vip-card">✨ LIKHAIA FAM ✨</div>
+                    <p style="font-size: 0.8rem; margin-top: 10px; color: #666;">Thank you for growing with us!</p>
+                </div>
+            </div>
+
+            <p id="box-instruction" style="font-size: 0.85rem; font-weight: 600; color: var(--primary-color);">Tap the box for a surprise!</p>
+            
             <br>
-            <a href="index.html" style="color: var(--accent-pink); font-weight: 600; text-decoration: none;">Back to Website</a>
+            <a href="index.html" style="color: var(--accent-pink); font-weight: 600; text-decoration: none; display: inline-block; margin-top: 20px;">Back to Website</a>
         </div>
     </div>
 
@@ -446,6 +488,39 @@
                 };
                 suggestionContainer.appendChild(chip);
             });
+        }
+
+        // --- INTERACTIVE SURPRISE LOGIC ---
+        function openSurprise() {
+            const box = document.getElementById('magic-box');
+            const reveal = document.getElementById('surprise-reveal');
+            const instruction = document.getElementById('box-instruction');
+            const title = document.getElementById('success-title');
+
+            if (box.classList.contains('opened')) return;
+
+            box.classList.add('opened');
+            reveal.style.display = 'block';
+            instruction.style.display = 'none';
+            title.innerText = "Welcome to the Family! 💖";
+
+            // Wow Explosion (Hearts + Stars)
+            const count = 200;
+            const defaults = { origin: { y: 0.7 } };
+
+            function fire(particleRatio, opts) {
+                confetti({
+                    ...defaults,
+                    ...opts,
+                    particleCount: Math.floor(count * particleRatio)
+                });
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55, shapes: ['heart'], colors: ['#d63384'] });
+            fire(0.2, { spread: 60, colors: ['#310a5d'] });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
         }
 
         stars.forEach(star => {
