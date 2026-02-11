@@ -258,6 +258,7 @@
             width: 100%;
             position: relative;
             margin: 20px 0;
+            padding: 0 40px;
         }
 
         .temp-quote {
@@ -268,22 +269,9 @@
             font-style: italic;
             font-weight: 700;
             text-align: center;
-            max-width: 750px;
+            max-width: 800px;
             word-wrap: break-word;
-            z-index: 2;
         }
-
-        .quote-icon {
-            font-family: 'Playfair Display', serif;
-            font-size: 280px;
-            color: var(--accent-pink);
-            opacity: 0.1;
-            position: absolute;
-            line-height: 1;
-            z-index: 1;
-        }
-        .quote-start { top: -50px; left: -40px; }
-        .quote-end { bottom: -120px; right: -40px; }
 
         .temp-footer {
             width: 100%;
@@ -395,9 +383,7 @@
             </div>
             
             <div class="temp-body">
-                <span class="quote-icon quote-start">“</span>
                 <p class="temp-quote" id="temp-quote-text"></p>
-                <span class="quote-icon quote-end">”</span>
             </div>
 
             <div class="temp-footer">
@@ -497,7 +483,7 @@
 
             // 1. Prepare the Review Card Image
             const quoteElement = document.getElementById('temp-quote-text');
-            quoteElement.innerText = message;
+            quoteElement.innerText = `“${message}”`;
             document.getElementById('temp-name-display').innerText = "- " + name;
             
             // Dynamic Font Sizing based on length
