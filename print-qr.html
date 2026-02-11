@@ -66,7 +66,7 @@
         /* THE CARD DESIGN */
         .thank-you-card {
             width: 100%;
-            aspect-ratio: 3.5 / 2; /* Business Card Ratio */
+            aspect-ratio: 3 / 2.3; /* Business Card Ratio */
             background: white;
             border: 1px solid #eee;
             border-radius: 15px;
@@ -94,10 +94,10 @@
         .card-qr { position: relative; z-index: 2; width: 35%; text-align: center; }
 
         .card-logo { height: 30px; margin-bottom: 10px; }
-        .card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--primary-color); margin-bottom: 5px; }
-        .card-text { font-size: 0.7rem; color: #666; line-height: 1.4; margin-bottom: 10px; }
+        .card-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--accent-pink); font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
+        .card-text { font-size: 0.75rem; color: #444; line-height: 1.5; margin-bottom: 15px; }
         
-        .card-socials { font-size: 0.6rem; color: var(--accent-pink); font-weight: 700; }
+        .card-socials { font-size: 0.6rem; color: var(--primary-color); font-weight: 700; opacity: 0.8; }
 
         .qr-frame {
             background: white;
@@ -181,8 +181,8 @@
                 <div class="thank-you-card">
                     <div class="card-content">
                         <img src="assets/images/logo.png" class="card-logo">
-                        <h2 class="card-title">Thank You!</h2>
-                        <p class="card-text">Every order helps our small studio grow. Scan to share your "Likha" experience and get a special discount on your next memory!</p>
+                        <h2 class="card-title">YOU’RE A WINNER! 🎁✨</h2>
+                        <p class="card-text">Your support helps us grow! Scan to leave a review and <b>instantly win up to 3 BONUS POLAROIDS</b> for your next order. Plus, unlock your exclusive VIP ID! 👑</p>
                         <div class="card-socials">
                             <i class="fa-brands fa-instagram"></i> @likhaiaworks &nbsp;&nbsp; 
                             <i class="fa-brands fa-facebook"></i> Likhaia Works
@@ -192,7 +192,7 @@
                         <div class="qr-frame">
                             <img src="${qrUrl}" alt="QR Code" style="object-fit: contain;">
                         </div>
-                        <p class="qr-label">Scan to rate ✨</p>
+                        <p class="qr-label">Scan to Claim 📸</p>
                     </div>
                 </div>`;
             }
