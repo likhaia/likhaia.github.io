@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Card Designer | LIKHAIAWORKS</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #310a5d;
+            --accent-pink: #d63384;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #f0f2f5;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        /* Toolbar for UI */
+        .admin-toolbar {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-group { display: flex; flex-direction: column; gap: 5px; }
+        .tool-group label { font-size: 0.8rem; font-weight: 700; color: #888; }
+        select, input { padding: 8px; border-radius: 5px; border: 1px solid #ddd; }
+
+        .btn-print {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-print:hover { transform: scale(1.05); background: var(--accent-pink); }
+
+        /* The Cards Layout */
+        .print-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* THE CARD DESIGN */
+        .thank-you-card {
+            width: 100%;
+            aspect-ratio: 3.5 / 2; /* Business Card Ratio */
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* Background Pattern */
+        .thank-you-card::before {
+            content: '';
+            position: absolute;
+            top: -50px; right: -50px;
+            width: 150px; height: 150px;
+            background: var(--bg-color, #fdf4f7);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .card-content { position: relative; z-index: 2; width: 60%; }
+        .card-qr { position: relative; z-index: 2; width: 35%; text-align: center; }
+
+        .card-logo { height: 30px; margin-bottom: 10px; }
+        .card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--primary-color); margin-bottom: 5px; }
+        .card-text { font-size: 0.7rem; color: #666; line-height: 1.4; margin-bottom: 10px; }
+        
+        .card-socials { font-size: 0.6rem; color: var(--accent-pink); font-weight: 700; }
+
+        .qr-frame {
+            background: white;
+            padding: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: inline-block;
+        }
+        .qr-frame img { width: 100px; height: 100px; display: block; }
+        .qr-label { font-size: 0.6rem; font-weight: 700; color: var(--primary-color); margin-top: 5px; text-transform: uppercase; }
+
+        /* Print Specifics */
+        @media print {
+            body { background: white; padding: 0; }
+            .admin-toolbar { display: none; }
+            .print-grid { gap: 0; padding: 0; }
+            .thank-you-card { border: 1px solid #ddd; box-shadow: none; margin: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-toolbar">
+        <div class="tool-group">
+            <label>Link Type</label>
+            <select id="link-type">
+                <option value="review.html">Review Page (Get Feedback)</option>
+                <option value="index.html">Main Shop (Catalog)</option>
+                <option value="links.html">Bio Links (Social Media)</option>
+            </select>
+        </div>
+        <div class="tool-group">
+            <label>QR Source</label>
+            <select id="qr-source">
+                <option value="auto">Auto-Generated (Dynamic)</option>
+                <option value="custom">My Custom QR (assets/images/qr-code.png)</option>
+            </select>
+        </div>
+        <div class="tool-group" id="auto-color-group">
+            <label>Auto QR Color</label>
+            <select id="qr-color">
+                <option value="310a5d">Likhaia Purple</option>
+                <option value="d63384">Likhaia Pink</option>
+                <option value="000000">Classic Black</option>
+            </select>
+        </div>
+        <button class="btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Cards</button>
+    </div>
+
+    <div class="print-grid" id="card-container">
+        <!-- 4 Cards will be generated here -->
+    </div>
+
+    <script>
+        const linkType = document.getElementById('link-type');
+        const qrSource = document.getElementById('qr-source');
+        const qrColor = document.getElementById('qr-color');
+        const autoColorGroup = document.getElementById('auto-color-group');
+        const container = document.getElementById('card-container');
+
+        function generateCards() {
+            // Get base URL (e.g. https://likhaia.github.io/)
+            const baseUrl = window.location.href.split('print-qr.html')[0];
+            const targetUrl = baseUrl + linkType.value;
+            const colorCode = qrColor.value;
+            
+            let qrUrl = "";
+            
+            if (qrSource.value === 'auto') {
+                autoColorGroup.style.opacity = "1";
+                qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(targetUrl)}&color=${colorCode}&bgcolor=ffffff&margin=10`;
+            } else {
+                autoColorGroup.style.opacity = "0.3";
+                // This points to the image you created
+                qrUrl = "assets/images/qr-code.png";
+            }
+
+            let html = '';
+            for(let i=0; i<4; i++) {
+                html += `
+                <div class="thank-you-card">
+                    <div class="card-content">
+                        <img src="assets/images/logo.png" class="card-logo">
+                        <h2 class="card-title">Thank You!</h2>
+                        <p class="card-text">Every order helps our small studio grow. Scan to share your "Likha" experience and get a special discount on your next memory!</p>
+                        <div class="card-socials">
+                            <i class="fa-brands fa-instagram"></i> @likhaiaworks &nbsp;&nbsp; 
+                            <i class="fa-brands fa-facebook"></i> Likhaia Works
+                        </div>
+                    </div>
+                    <div class="card-qr">
+                        <div class="qr-frame">
+                            <img src="${qrUrl}" alt="QR Code" style="object-fit: contain;">
+                        </div>
+                        <p class="qr-label">Scan to rate ✨</p>
+                    </div>
+                </div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        linkType.onchange = generateCards;
+        qrSource.onchange = generateCards;
+        qrColor.onchange = generateCards;
+        generateCards(); // Initial load
+    </script>
+</body>
+</html>
