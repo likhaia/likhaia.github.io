@@ -227,15 +227,80 @@
         }
 
         .vip-card {
-            background: var(--primary-color);
-            color: white;
-            padding: 15px;
-            border-radius: 15px;
-            margin-top: 15px;
+            background: linear-gradient(135deg, #310a5d 0%, #4a148c 100%);
+            color: #fcf6ba; /* Gold text */
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 20px;
             font-weight: 700;
-            letter-spacing: 1px;
-            box-shadow: 0 10px 20px rgba(49, 10, 93, 0.2);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border: 2px solid #bf953f;
+            text-align: center;
         }
+
+        /* Metallic Foil Effect */
+        .metallic-text {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+        }
+
+        /* Embossed / Raised Lettering */
+        .embossed {
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.2), -1px -1px 0px rgba(0,0,0,0.5);
+        }
+
+        /* Holographic Shimmer */
+        .vip-card::after {
+            content: '';
+            position: absolute;
+            top: -150%; left: -150%;
+            width: 300%; height: 300%;
+            background: linear-gradient(
+                45deg, 
+                transparent 45%, 
+                rgba(255,255,255,0.1) 48%, 
+                rgba(255,255,255,0.4) 50%, 
+                rgba(255,255,255,0.1) 52%, 
+                transparent 55%
+            );
+            transform: rotate(-45deg);
+            animation: holo-shimmer 4s infinite;
+        }
+
+        @keyframes holo-shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(-45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(-45deg); }
+        }
+
+        .polaroid-reward {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            color: var(--primary-color);
+            font-weight: 800;
+            animation: bounce 2s infinite;
+        }
+
+        .btn-messenger {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #0084FF;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        .btn-messenger:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,132,255,0.3); }
 
         /* --- TESTIMONIAL CARD TEMPLATE (HIDDEN) --- */
         #review-template {
@@ -397,14 +462,32 @@
 
         <div id="success-view" class="success-state">
             <h2 id="success-title">Review Shared! ❤️</h2>
-            <p>Your "Likha" story means the world to our studio.</p>
+            <p id="success-desc">Your "Likha" story means the world to our studio.</p>
             
             <div class="magic-box-container" id="magic-box" onclick="openSurprise()">
                 <div class="gift-box">🎁</div>
                 <div class="reveal-content" id="surprise-reveal">
-                    <p style="font-weight: 700; color: var(--accent-pink);">You're now part of the</p>
-                    <div class="vip-card">✨ LIKHAIA FAM ✨</div>
-                    <p style="font-size: 0.8rem; margin-top: 10px; color: #666;">Thank you for growing with us!</p>
+                    <!-- High Rating Reward (4-5 Stars) -->
+                    <div id="vip-reward" style="display: none;">
+                        <p style="font-weight: 700; color: var(--accent-pink);">CONGRATULATIONS!</p>
+                        <div class="polaroid-reward" id="polaroid-count">🎁 +2 Bonus Polaroids</div>
+                        <p style="font-size: 0.75rem; color: #666;">(Claim on your next purchase! ✨)</p>
+                        
+                        <div class="vip-card">
+                            <div class="metallic-text embossed">LIKHAIA FAM</div>
+                            <p style="font-size: 0.65rem; letter-spacing: 3px; margin-top: 5px; color: #fcf6ba; opacity: 0.8;">OFFICIAL MEMBER</p>
+                        </div>
+                        
+                        <a href="https://m.me/1016930224830241" target="_blank" class="btn-messenger">
+                            <i class="fa-brands fa-facebook-messenger"></i> Join Exclusive Family GC
+                        </a>
+                    </div>
+
+                    <!-- Low Rating Note (1-3 Stars) -->
+                    <div id="standard-reward" style="display: none;">
+                        <p style="font-weight: 700; color: var(--primary-color);">Thank You! ❤️</p>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">We've received your feedback and will work hard to improve for you!</p>
+                    </div>
                 </div>
             </div>
 
@@ -496,31 +579,41 @@
             const reveal = document.getElementById('surprise-reveal');
             const instruction = document.getElementById('box-instruction');
             const title = document.getElementById('success-title');
+            const desc = document.getElementById('success-desc');
+            const vipReward = document.getElementById('vip-reward');
+            const standardReward = document.getElementById('standard-reward');
+            const polaroidText = document.getElementById('polaroid-count');
 
             if (box.classList.contains('opened')) return;
 
             box.classList.add('opened');
             reveal.style.display = 'block';
             instruction.style.display = 'none';
-            title.innerText = "Welcome to the Family! 💖";
 
-            // Wow Explosion (Hearts + Stars)
-            const count = 200;
-            const defaults = { origin: { y: 0.7 } };
+            if (currentRating >= 4) {
+                // High Rating: Show VIP Card + Random Polaroids
+                title.innerText = "Welcome to the Family! 💖";
+                desc.style.display = 'none';
+                vipReward.style.display = 'block';
+                
+                // Random 1-3 polaroids
+                const count = Math.floor(Math.random() * 3) + 1;
+                polaroidText.innerText = `🎁 +${count} Bonus Polaroids`;
 
-            function fire(particleRatio, opts) {
-                confetti({
-                    ...defaults,
-                    ...opts,
-                    particleCount: Math.floor(count * particleRatio)
-                });
+                // Wow Explosion (Hearts + Stars)
+                const cCount = 200;
+                const defaults = { origin: { y: 0.7 } };
+                function fire(particleRatio, opts) {
+                    confetti({ ...defaults, ...opts, particleCount: Math.floor(cCount * particleRatio) });
+                }
+                fire(0.25, { spread: 26, startVelocity: 55, shapes: ['heart'], colors: ['#d63384'] });
+                fire(0.2, { spread: 60, colors: ['#310a5d'] });
+                fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            } else {
+                // Low Rating: Show simple thanks
+                title.innerText = "Feedback Received! 🩹";
+                standardReward.style.display = 'block';
             }
-
-            fire(0.25, { spread: 26, startVelocity: 55, shapes: ['heart'], colors: ['#d63384'] });
-            fire(0.2, { spread: 60, colors: ['#310a5d'] });
-            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-            fire(0.1, { spread: 120, startVelocity: 45 });
         }
 
         stars.forEach(star => {
