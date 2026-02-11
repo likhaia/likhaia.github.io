@@ -214,11 +214,14 @@
 
         .reveal-content {
             display: none;
-            background: #fff0f3;
-            padding: 20px;
-            border-radius: 20px;
-            border: 2px dashed var(--accent-pink);
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(49, 10, 93, 0.1);
             animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            max-width: 450px;
+            width: 100%;
+            border: 1px solid #eee;
         }
 
         @keyframes popIn {
@@ -226,34 +229,47 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        .vip-card {
-            background: linear-gradient(135deg, #310a5d 0%, #4a148c 100%);
-            color: #fcf6ba; /* Gold text */
-            padding: 25px;
-            border-radius: 20px;
-            margin-top: 20px;
-            font-weight: 700;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            border: 2px solid #bf953f;
-            text-align: center;
+        /* Luxury VIP Card - Landscape */
+        .vip-card-wrapper {
+            perspective: 1000px;
+            margin: 20px 0;
         }
 
-        /* Metallic Foil Effect */
+        .vip-card {
+            width: 100%;
+            aspect-ratio: 1.58 / 1; /* Standard Credit Card Ratio */
+            background: linear-gradient(135deg, #1a0633 0%, #310a5d 50%, #4a148c 100%);
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left;
+            border: 1px solid #bf953f;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .card-chip {
+            width: 45px;
+            height: 35px;
+            background: linear-gradient(135deg, #fcf6ba, #bf953f);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
         .metallic-text {
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 1.4rem;
+            font-weight: 800;
+            text-transform: uppercase;
             letter-spacing: 2px;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
         }
 
-        /* Embossed / Raised Lettering */
-        .embossed {
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.2), -1px -1px 0px rgba(0,0,0,0.5);
-        }
+        .vip-card .card-name { font-size: 1.2rem; }
+        .vip-card .card-status { font-size: 0.6rem; opacity: 0.8; letter-spacing: 3px; }
 
         /* Holographic Shimmer */
         .vip-card::after {
@@ -264,13 +280,13 @@
             background: linear-gradient(
                 45deg, 
                 transparent 45%, 
-                rgba(255,255,255,0.1) 48%, 
-                rgba(255,255,255,0.4) 50%, 
-                rgba(255,255,255,0.1) 52%, 
+                rgba(255,255,255,0.05) 48%, 
+                rgba(255,255,255,0.2) 50%, 
+                rgba(255,255,255,0.05) 52%, 
                 transparent 55%
             );
             transform: rotate(-45deg);
-            animation: holo-shimmer 4s infinite;
+            animation: holo-shimmer 5s infinite linear;
         }
 
         @keyframes holo-shimmer {
@@ -278,29 +294,58 @@
             100% { transform: translateX(100%) translateY(100%) rotate(-45deg); }
         }
 
-        .polaroid-reward {
-            font-size: 1.2rem;
-            margin: 15px 0;
-            color: var(--primary-color);
-            font-weight: 800;
-            animation: bounce 2s infinite;
+        .reward-badge {
+            display: inline-block;
+            background: var(--accent-pink);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3);
         }
 
-        .btn-messenger {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .action-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-claim {
             background: #0084FF;
             color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
+            padding: 12px;
+            border-radius: 12px;
             text-decoration: none;
-            font-size: 0.85rem;
             font-weight: 700;
-            margin-top: 15px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
             transition: 0.3s;
         }
-        .btn-messenger:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,132,255,0.3); }
+
+        .btn-download {
+            background: #f0f0f0;
+            color: #333;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: 0.3s;
+        }
+
+        .btn-claim:hover { background: #0073e6; transform: translateY(-2px); }
+        .btn-download:hover { background: #e0e0e0; transform: translateY(-2px); }
 
         /* --- TESTIMONIAL CARD TEMPLATE (HIDDEN) --- */
         #review-template {
@@ -462,25 +507,38 @@
 
         <div id="success-view" class="success-state">
             <h2 id="success-title">Review Shared! ❤️</h2>
-            <p id="success-desc">Your "Likha" story means the world to our studio.</p>
             
             <div class="magic-box-container" id="magic-box" onclick="openSurprise()">
                 <div class="gift-box">🎁</div>
                 <div class="reveal-content" id="surprise-reveal">
                     <!-- High Rating Reward (4-5 Stars) -->
                     <div id="vip-reward" style="display: none;">
-                        <p style="font-weight: 700; color: var(--accent-pink);">CONGRATULATIONS!</p>
-                        <div class="polaroid-reward" id="polaroid-count">🎁 +2 Bonus Polaroids</div>
-                        <p style="font-size: 0.75rem; color: #666;">(Claim on your next purchase! ✨)</p>
+                        <p style="font-weight: 700; color: var(--accent-pink); font-size: 0.8rem; letter-spacing: 2px;">CONGRATULATIONS!</p>
+                        <div class="reward-badge" id="polaroid-count">🎁 +2 Bonus Polaroids</div>
                         
-                        <div class="vip-card">
-                            <div class="metallic-text embossed">LIKHAIA FAM</div>
-                            <p style="font-size: 0.65rem; letter-spacing: 3px; margin-top: 5px; color: #fcf6ba; opacity: 0.8;">OFFICIAL MEMBER</p>
+                        <div class="vip-card-wrapper">
+                            <div class="vip-card" id="downloadable-vip-card">
+                                <div class="card-chip"></div>
+                                <div class="card-top">
+                                    <div class="metallic-text card-name">LIKHAIA FAM</div>
+                                    <div class="card-status metallic-text">OFFICIAL MEMBER</div>
+                                </div>
+                                <div class="card-bottom">
+                                    <p style="font-family: monospace; color: #fcf6ba; font-size: 0.7rem; opacity: 0.6;">MEMBER ID: <span id="vip-id"></span></p>
+                                </div>
+                            </div>
                         </div>
+
+                        <p style="font-size: 0.7rem; color: #888; margin-top: 10px;">Claim this prize on your next purchase! ✨</p>
                         
-                        <a href="https://m.me/1016930224830241" target="_blank" class="btn-messenger">
-                            <i class="fa-brands fa-facebook-messenger"></i> Join Exclusive Family GC
-                        </a>
+                        <div class="action-btns">
+                            <a href="#" id="claim-btn" target="_blank" class="btn-claim">
+                                <i class="fa-brands fa-facebook-messenger"></i> Claim Prize
+                            </a>
+                            <button class="btn-download" onclick="downloadVIPCard()">
+                                <i class="fa-solid fa-download"></i> Save Card
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Low Rating Note (1-3 Stars) -->
@@ -579,10 +637,11 @@
             const reveal = document.getElementById('surprise-reveal');
             const instruction = document.getElementById('box-instruction');
             const title = document.getElementById('success-title');
-            const desc = document.getElementById('success-desc');
             const vipReward = document.getElementById('vip-reward');
             const standardReward = document.getElementById('standard-reward');
             const polaroidText = document.getElementById('polaroid-count');
+            const vipIdElement = document.getElementById('vip-id');
+            const claimBtn = document.getElementById('claim-btn');
 
             if (box.classList.contains('opened')) return;
 
@@ -591,16 +650,22 @@
             instruction.style.display = 'none';
 
             if (currentRating >= 4) {
-                // High Rating: Show VIP Card + Random Polaroids
                 title.innerText = "Welcome to the Family! 💖";
-                desc.style.display = 'none';
                 vipReward.style.display = 'block';
                 
                 // Random 1-3 polaroids
-                const count = Math.floor(Math.random() * 3) + 1;
-                polaroidText.innerText = `🎁 +${count} Bonus Polaroids`;
+                const pCount = Math.floor(Math.random() * 3) + 1;
+                polaroidText.innerText = `🎁 +${pCount} Bonus Polaroids`;
 
-                // Wow Explosion (Hearts + Stars)
+                // Generate Random VIP ID
+                const randomId = "LW-" + Math.floor(Math.random() * 9000 + 1000);
+                vipIdElement.innerText = randomId;
+
+                // Pre-filled Messenger Claim Link
+                const claimMsg = `Hi Likhaia! I'm a VIP member (${randomId}) and I'd like to claim my +${pCount} bonus polaroids reward! ✨`;
+                claimBtn.href = `https://m.me/1016930224830241?text=${encodeURIComponent(claimMsg)}`;
+
+                // Wow Explosion
                 const cCount = 200;
                 const defaults = { origin: { y: 0.7 } };
                 function fire(particleRatio, opts) {
@@ -610,9 +675,36 @@
                 fire(0.2, { spread: 60, colors: ['#310a5d'] });
                 fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
             } else {
-                // Low Rating: Show simple thanks
                 title.innerText = "Feedback Received! 🩹";
                 standardReward.style.display = 'block';
+            }
+        }
+
+        async function downloadVIPCard() {
+            const card = document.getElementById('downloadable-vip-card');
+            const downloadBtn = document.querySelector('.btn-download');
+            
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            
+            try {
+                const canvas = await html2canvas(card, {
+                    scale: 3, // High quality
+                    backgroundColor: null,
+                    logging: false,
+                    useCORS: true
+                });
+                
+                const link = document.createElement('a');
+                link.download = 'Likhaia-VIP-Card.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                downloadBtn.innerHTML = '<i class="fa-solid fa-check"></i> Saved!';
+                setTimeout(() => { downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i> Save Card'; }, 2000);
+            } catch (err) {
+                console.error(err);
+                alert("Could not save image. Try taking a screenshot!");
+                downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i> Save Card';
             }
         }
 
@@ -711,16 +803,6 @@
                 // 4. Show Success View
                 document.getElementById('review-step-1').style.display = 'none';
                 document.getElementById('success-view').style.display = 'block';
-
-                // Optional Messenger redirect
-                const msgrMessage = `Hi Likhaia! I just rated you ${currentRating} stars for my ${selectedProduct}. Review: "${message}"`;
-                const msgrLink = `https://m.me/1016930224830241?text=${encodeURIComponent(msgrMessage)}`;
-                
-                setTimeout(() => {
-                    if(confirm("Review saved! Would you like to say hi on Messenger too?")) {
-                        window.open(msgrLink, '_blank');
-                    }
-                }, 1500);
 
             } catch (err) {
                 console.error(err);
