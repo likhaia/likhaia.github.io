@@ -207,51 +207,59 @@
         /* --- TESTIMONIAL CARD TEMPLATE (HIDDEN) --- */
         #review-template {
             position: absolute;
-            left: -9999px; /* Hide from user but keep in DOM */
+            left: -9999px;
             top: 0;
             width: 1080px;
             height: 1080px;
             background: var(--bg-gradient);
-            padding: 80px;
+            padding: 60px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
         }
 
         .temp-card {
             background: white;
-            width: 100%;
-            height: 100%;
+            width: 960px;
+            height: 960px;
             border-radius: 60px;
-            padding: 80px 100px;
+            padding: 60px 80px;
             box-shadow: 0 40px 100px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            border: 30px solid rgba(255,255,255,0.6);
+            border: 20px solid rgba(255,255,255,0.6);
+            overflow: hidden;
         }
 
-        .temp-logo { height: 110px; margin-bottom: 40px; }
-        
+        .temp-top { width: 100%; text-align: center; }
+        .temp-logo { height: 90px; margin-bottom: 30px; }
         .temp-question {
-            font-size: 36px;
+            font-size: 32px;
             color: #999;
             font-weight: 600;
             letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
-        
         .temp-stars { 
             color: #FFD700; 
-            font-size: 90px; 
-            margin-bottom: 50px;
+            font-size: 80px; 
+            margin-bottom: 20px;
             text-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
         }
-        
+
+        .temp-body {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+            margin: 20px 0;
+        }
+
         .temp-quote {
             font-family: 'Playfair Display', serif;
             font-size: 64px;
@@ -259,44 +267,44 @@
             color: var(--primary-color);
             font-style: italic;
             font-weight: 700;
-            position: relative;
-            max-width: 850px;
-            word-wrap: break-word;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            margin: 20px 0;
+            max-width: 750px;
+            word-wrap: break-word;
+            z-index: 2;
         }
 
-        .temp-quote::before, .temp-quote::after {
-            content: '“';
-            font-size: 240px;
-            color: var(--accent-pink);
-            opacity: 0.12;
-            position: absolute;
+        .quote-icon {
             font-family: 'Playfair Display', serif;
+            font-size: 280px;
+            color: var(--accent-pink);
+            opacity: 0.1;
+            position: absolute;
             line-height: 1;
+            z-index: 1;
         }
-        .temp-quote::before { top: -120px; left: -100px; }
-        .temp-quote::after { bottom: -140px; right: -40px; content: '”'; }
+        .quote-start { top: -50px; left: -40px; }
+        .quote-end { bottom: -120px; right: -40px; }
+
+        .temp-footer {
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
 
         .temp-name {
-            font-size: 56px;
+            font-size: 48px;
             font-weight: 700;
             color: var(--accent-pink);
-            margin-top: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .temp-tag {
-            font-size: 32px;
+            font-size: 28px;
             color: #bbb;
             letter-spacing: 5px;
             text-transform: uppercase;
             font-weight: 600;
-            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -380,12 +388,22 @@
     <!-- HIDDEN PRE-STYLED TESTIMONIAL CARD FOR SOCIAL MEDIA -->
     <div id="review-template">
         <div class="temp-card">
-            <img src="assets/images/logo.png" class="temp-logo">
-            <p class="temp-question" id="temp-question-display"></p>
-            <div class="temp-stars" id="temp-stars-display"></div>
-            <p class="temp-quote" id="temp-quote-text"></p>
-            <p class="temp-name" id="temp-name-display"></p>
-            <p class="temp-tag">Handmade with Love • LIKHAIAWORKS</p>
+            <div class="temp-top">
+                <img src="assets/images/logo.png" class="temp-logo">
+                <p class="temp-question" id="temp-question-display"></p>
+                <div class="temp-stars" id="temp-stars-display"></div>
+            </div>
+            
+            <div class="temp-body">
+                <span class="quote-icon quote-start">“</span>
+                <p class="temp-quote" id="temp-quote-text"></p>
+                <span class="quote-icon quote-end">”</span>
+            </div>
+
+            <div class="temp-footer">
+                <p class="temp-name" id="temp-name-display"></p>
+                <p class="temp-tag">Handmade with Love • LIKHAIAWORKS</p>
+            </div>
         </div>
     </div>
 
