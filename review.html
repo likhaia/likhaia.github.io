@@ -90,6 +90,68 @@
             resize: none;
         }
 
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .chip {
+            padding: 6px 12px;
+            background: #f0f0f0;
+            border: 1px solid #eee;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chip:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .chip.active {
+            background: var(--accent-pink);
+            color: white;
+            border-color: var(--accent-pink);
+        }
+
+        .upload-btn {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed #ddd;
+            background: #f9f9f9;
+            border-radius: 12px;
+            color: #666;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .upload-btn:hover { border-color: var(--accent-pink); color: var(--accent-pink); background: #fff9fb; }
+
+        .photo-preview-box {
+            margin-top: 10px;
+            display: none;
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .photo-preview-box img { width: 100%; height: 100%; object-fit: cover; }
+
         .input-group { text-align: left; margin-bottom: 20px; }
         .input-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; }
         .input-group input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; }
@@ -227,9 +289,21 @@
                 <i class="fa-solid fa-star star" data-value="5"></i>
             </div>
 
-            <div id="feedback-form" class="feedback-area">
+                <div id="feedback-form" class="feedback-area">
                 <span id="reaction-text" class="reaction-msg"></span>
                 
+                <div class="input-group">
+                    <label>What did you buy?</label>
+                    <div id="product-chips" class="suggestion-chips">
+                        <div class="chip product-chip" data-val="Scrapbook">Mini Scrapbook</div>
+                        <div class="chip product-chip" data-val="Keychain">Keychain</div>
+                        <div class="chip product-chip" data-val="Polaroids">Polaroids</div>
+                        <div class="chip product-chip" data-val="Gift Set">Gift Set</div>
+                        <div class="chip product-chip" data-val="Decals">Vinyl Decals</div>
+                        <div class="chip product-chip" data-val="Stickers">Chibi Stickers</div>
+                    </div>
+                </div>
+
                 <div class="input-group">
                     <label>Your Name (Optional)</label>
                     <input type="text" id="customer-name" placeholder="Name or Nickname">
@@ -237,7 +311,21 @@
 
                 <div class="input-group">
                     <label id="msg-label">What can we improve?</label>
+                    <div id="suggestion-container" class="suggestion-chips">
+                        <!-- Chips will be injected via JS -->
+                    </div>
                     <textarea id="customer-message" placeholder="Type your message here..."></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Add a Photo of your Likha (Optional)</label>
+                    <div class="photo-upload-wrapper">
+                        <input type="file" id="order-photo" accept="image/*" hidden>
+                        <button type="button" class="upload-btn" onclick="document.getElementById('order-photo').click()">
+                            <i class="fa-solid fa-camera"></i> <span>Attach Photo</span>
+                        </button>
+                        <div id="photo-preview" class="photo-preview-box"></div>
+                    </div>
                 </div>
 
                 <label class="permission-box">
@@ -278,10 +366,52 @@
         const feedbackArea = document.getElementById('feedback-form');
         const reactionText = document.getElementById('reaction-text');
         const msgLabel = document.getElementById('msg-label');
+        const suggestionContainer = document.getElementById('suggestion-container');
+        const messageBox = document.getElementById('customer-message');
+        const photoInput = document.getElementById('order-photo');
+        const photoPreview = document.getElementById('photo-preview');
+        const productChips = document.querySelectorAll('.product-chip');
         let currentRating = 0;
+        let selectedProduct = "";
 
-        const TELEGRAM_TOKEN = "8161719576:AAH4qFIJg-XZqAbUol7zotQ9V-oIkXHvL2A";
-        const TELEGRAM_CHAT_ID = "5543161340";
+        // Product Chip Logic
+        productChips.forEach(chip => {
+            chip.onclick = () => {
+                productChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                selectedProduct = chip.getAttribute('data-val');
+            };
+        });
+
+        // Photo Preview Logic
+        photoInput.onchange = () => {
+            const file = photoInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    photoPreview.innerHTML = `<img src="${e.target.result}">`;
+                    photoPreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        const positiveSuggestions = ["Beautiful quality! ✨", "Perfect gift idea 🎁", "Fast delivery! 🚀", "Super cute design 😍", "Great service! ❤️", "Will order again! 🛍️"];
+        const negativeSuggestions = ["Delivery was slow ⏳", "Item arrived damaged 📦", "Colors look different 🎨", "Poor packaging 🩹", "Hard to contact 📱", "Not as expected 😕"];
+
+        function showSuggestions(list) {
+            suggestionContainer.innerHTML = '';
+            list.forEach(text => {
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerText = text;
+                chip.onclick = () => {
+                    if (messageBox.value) messageBox.value += " " + text;
+                    else messageBox.value = text;
+                };
+                suggestionContainer.appendChild(chip);
+            });
+        }
 
         stars.forEach(star => {
             star.addEventListener('click', () => {
@@ -293,11 +423,13 @@
                     reactionText.innerText = "Yay! We're so happy you love it! 😍";
                     reactionText.style.color = "#d63384";
                     msgLabel.innerText = "What did you love most about it?";
+                    showSuggestions(positiveSuggestions);
                     confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#310a5d', '#d63384', '#FFD700'] });
                 } else {
                     reactionText.innerText = "We want to make it better for you. 🥺";
                     reactionText.style.color = "#310a5d";
                     msgLabel.innerText = "How can we improve our crafts or service?";
+                    showSuggestions(negativeSuggestions);
                 }
             });
         });
@@ -306,12 +438,13 @@
             const name = document.getElementById('customer-name').value || "Happy Customer";
             const message = document.getElementById('customer-message').value;
             const allowPost = document.getElementById('allow-post').checked;
+            const productFile = photoInput.files[0];
             const submitBtn = document.getElementById('submit-review');
 
             if (!message) { alert("Please type a short message!"); return; }
 
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Generating Card...';
+            submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
 
             // 1. Prepare the Review Card Image
             document.getElementById('temp-quote-text').innerText = message;
@@ -331,23 +464,37 @@
 
                 const blob = await new Promise(resolve => canvas.toBlob(blob => resolve(blob), 'image/jpeg', 0.9));
 
-                // 2. Send Image to Telegram
-                const formData = new FormData();
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('photo', blob, 'review-card.jpg');
-                formData.append('caption', `⭐ NEW REVIEW\nRating: ${currentRating}/5\nFrom: ${name}\nPost Allowed: ${allowPost ? 'YES ✅' : 'No ❌'}`);
+                // 2. Send Media to Telegram
+                // We send the generated card first
+                const cardData = new FormData();
+                cardData.append('chat_id', TELEGRAM_CHAT_ID);
+                cardData.append('photo', blob, 'review-card.jpg');
+                cardData.append('caption', `⭐ NEW REVIEW\nRating: ${currentRating}/5\nProduct: ${selectedProduct || 'Not Specified'}\nFrom: ${name}\nPost Allowed: ${allowPost ? 'YES ✅' : 'No ❌'}`);
 
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, {
                     method: 'POST',
-                    body: formData
+                    body: cardData
                 });
 
-                // 3. Show Success View
+                // 3. Send the original product photo if uploaded
+                if (productFile) {
+                    const photoData = new FormData();
+                    photoData.append('chat_id', TELEGRAM_CHAT_ID);
+                    photoData.append('photo', productFile);
+                    photoData.append('caption', `📸 ORIGINAL PHOTO FROM: ${name}\nFor: ${selectedProduct || 'Unknown'}`);
+                    
+                    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, {
+                        method: 'POST',
+                        body: photoData
+                    });
+                }
+
+                // 4. Show Success View
                 document.getElementById('review-step-1').style.display = 'none';
                 document.getElementById('success-view').style.display = 'block';
 
                 // Optional Messenger redirect
-                const msgrMessage = `Hi Likhaia! I just rated you ${currentRating} stars. Review: "${message}"`;
+                const msgrMessage = `Hi Likhaia! I just rated you ${currentRating} stars for my ${selectedProduct}. Review: "${message}"`;
                 const msgrLink = `https://m.me/1016930224830241?text=${encodeURIComponent(msgrMessage)}`;
                 
                 setTimeout(() => {
