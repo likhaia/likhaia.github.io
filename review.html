@@ -255,14 +255,19 @@
         .temp-quote {
             font-family: 'Playfair Display', serif;
             font-size: 64px;
-            line-height: 1.4;
+            line-height: 1.3;
             color: var(--primary-color);
-            margin-bottom: 60px;
             font-style: italic;
             font-weight: 700;
             position: relative;
-            max-width: 800px;
+            max-width: 850px;
             word-wrap: break-word;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 20px 0;
         }
 
         .temp-quote::before, .temp-quote::after {
@@ -473,9 +478,17 @@
             submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
 
             // 1. Prepare the Review Card Image
-            document.getElementById('temp-quote-text').innerText = message;
+            const quoteElement = document.getElementById('temp-quote-text');
+            quoteElement.innerText = message;
             document.getElementById('temp-name-display').innerText = "- " + name;
             
+            // Dynamic Font Sizing based on length
+            const msgLen = message.length;
+            if (msgLen > 150) quoteElement.style.fontSize = '32px';
+            else if (msgLen > 100) quoteElement.style.fontSize = '42px';
+            else if (msgLen > 60) quoteElement.style.fontSize = '52px';
+            else quoteElement.style.fontSize = '64px';
+
             // Set Dynamic Question on Card
             const questionDisplay = document.getElementById('temp-question-display');
             if (currentRating >= 4) {
